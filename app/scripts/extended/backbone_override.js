@@ -1,6 +1,7 @@
-define(['underscore', 'backbone_original', 'app'], function(_, Backbone, App){
-  'use strict';
+'use strict';
 
+var _ = require('underscore');
+var Backbone = require('backbone');
 
 
 ;(function(Backbone) {
@@ -92,12 +93,12 @@ define(['underscore', 'backbone_original', 'app'], function(_, Backbone, App){
   };
 
   Backbone.Router.prototype.route = function(route, name, callback) {
-    if (!_.isRegExp(route)) route = this._routeToRegExp(route);
+    if (!_.isRegExp(route)){ route = this._routeToRegExp(route); }
     if (_.isFunction(name)) {
       callback = name;
       name = '';
     }
-    if (!callback) callback = this[name];
+    if (!callback){ callback = this[name]; }
     var router = this;
     Backbone.history.route(route, function(fragment) {
       var args = router._extractParameters(route, fragment, name); //name is inserted
@@ -123,14 +124,16 @@ define(['underscore', 'backbone_original', 'app'], function(_, Backbone, App){
   //Router url_for  =======================================================================
 
   // From prototype 1.7
-  var rescape = function(str){return String(str).replace(/([.*+?\^=!:${}()|\[\]\/\\])/g, '\\$1')};
+  var rescape = function(str){
+    return String(str).replace(/([.*+?\^=!:${}()|\[\]\/\\])/g, '\\$1');
+  };
 
   Backbone.Router.prototype.url_for = function (name, params, opts){
     params || (params = {});
     opts || (opts = {});
 
 
-    params.locale = params.locale || this.params.locale || App.default_locale; //TODO: extract
+    params.locale = params.locale || this.params.locale; //TODO: extract
 
     this._inverted_routes || (this._inverted_routes = _.invert(this.routes));
 
@@ -186,6 +189,4 @@ define(['underscore', 'backbone_original', 'app'], function(_, Backbone, App){
   };
 
 
-  return Backbone;
-
-});
+  module.exports = Backbone;

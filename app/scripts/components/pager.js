@@ -1,5 +1,6 @@
-define(['underscore'], function(_){
   'use strict';
+
+  var _ = require('underscore');
 
   function Pager(options){
     _.extend(this, options || {});
@@ -96,6 +97,4 @@ define(['underscore'], function(_){
   };
 
 
-  return Pager;
-
-});
+  module.exports = Pager;

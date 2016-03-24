@@ -1,15 +1,14 @@
-define(['handlebars', './helpers'], function(Handlebars, helpers){
+'use strict';
 
-  'use strict';
+var Handlebars = require('handlebars');
+var helpers = require('./helpers');
 
-  Handlebars.r = function(parent, name){
-    return parent && (parent.attributes && typeof parent.get == 'function' ? parent.get(name) : parent[name]);
-  }
+Handlebars.r = function(parent, name){
+  return parent && (parent.attributes && typeof parent.get == 'function' ? parent.get(name) : parent[name]);
+};
 
-  for(var k in helpers){
-    Handlebars.registerHelper(k, helpers[k]);
-  }
+for(var k in helpers){
+  Handlebars.registerHelper(k, helpers[k]);
+}
 
-  return Handlebars;
-
-});
+module.exports = Handlebars;

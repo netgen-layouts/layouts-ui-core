@@ -107,6 +107,10 @@ module.exports = function (grunt) {
           //    files: '<%= yeoman.app %>/scripts/{,*/}*.js',
           //    tasks: ['yuidoc']
           //  },
+            browserify: {
+              files: ['<%= yeoman.app %>/scripts/**/*.js'],
+              tasks: ['browserify:dev']
+            },
             sass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['sass:server']
@@ -231,7 +235,7 @@ module.exports = function (grunt) {
                     knownHelpers: known_helpers,
                     knownHelpersOnly: true
                   },
-                  amd: true,
+                  commonjs: true,
                   wrapped: true,
                   processPartialName: function(filename) {
                       return filename
@@ -275,49 +279,74 @@ module.exports = function (grunt) {
          * Example build file
          * https://github.com/jrburke/r.js/blob/master/build/example.build.js
          */
-        requirejs: {
+        // requirejs: {
+        //     options: {
+        //         // `name` and `out` is set by grunt-usemin
+        //         name: '../../bower_components/almond/almond',
+        //         include: ['main'],
+        //         mainConfigFile: '<%= yeoman.app %>/scripts/main.js',
+        //         out: '<%= yeoman.dist %>/scripts/main.js',
+        //         //out: '.tmp/scripts/main.js',
+        //         baseUrl:  '<%= yeoman.app %>/scripts',
+        //         optimize: 'uglify2',
+        //         // TODO: Figure out how to make sourcemaps work with grunt-usemin
+        //         // https://github.com/yeoman/grunt-usemin/issues/30
+        //         generateSourceMaps: true,
+        //         // required to support SourceMaps
+        //         // http://requirejs.org/docs/errors.html#sourcemapcomments
+        //         preserveLicenseComments: false,
+        //         useStrict: true,
+        //         wrap: true,
+        //         uglify2: {
+        //             /*
+        //             output: {
+        //                 beautify: true
+        //             },
+        //             */
+        //             compress: {
+        //                 drop_console: true,
+        //                 drop_debugger: true
+        //             }
+        //         } // https://github.com/mishoo/UglifyJS2
+        //     },
+
+        //     staging: {
+        //       options:{
+        //         paths: {
+        //           "env": 'environments/staging'
+        //         }
+        //       }
+        //     },
+
+        //     development: {
+
+        //     }
+
+        // },
+        browserify: {
+          vendor: {
+            src: [],
+            dest: '.tmp/scripts/vendor.js',
             options: {
-                // `name` and `out` is set by grunt-usemin
-                name: '../../bower_components/almond/almond',
-                include: ['main'],
-                mainConfigFile: '<%= yeoman.app %>/scripts/main.js',
-                out: '<%= yeoman.dist %>/scripts/main.js',
-                //out: '.tmp/scripts/main.js',
-                baseUrl:  '<%= yeoman.app %>/scripts',
-                optimize: 'uglify2',
-                // TODO: Figure out how to make sourcemaps work with grunt-usemin
-                // https://github.com/yeoman/grunt-usemin/issues/30
-                generateSourceMaps: true,
-                // required to support SourceMaps
-                // http://requirejs.org/docs/errors.html#sourcemapcomments
-                preserveLicenseComments: false,
-                useStrict: true,
-                wrap: true,
-                uglify2: {
-                    /*
-                    output: {
-                        beautify: true
-                    },
-                    */
-                    compress: {
-                        drop_console: true,
-                        drop_debugger: true
-                    }
-                } // https://github.com/mishoo/UglifyJS2
-            },
-
-            staging: {
-              options:{
-                paths: {
-                  "env": 'environments/staging'
-                }
-              }
-            },
-
-            development: {
-
+              debug: true,
+              require: ['jquery', 'underscore', 'backbone']
             }
-
+          },
+          dev: {
+            src: ['<%= yeoman.app %>/scripts/main.js'],
+            dest: '.tmp/scripts/main.js',
+            options: {
+              debug: true,
+              external: ['jquery', 'underscore', 'backbone'],
+              browserifyOptions:{
+                debug: true
+              },
+              alias: {
+                'core': './app/scripts/core.js',
+                'core_boot': './app/scripts/core_boot.js'
+              }
+            }
+          }
         },
         filerev: {
 
@@ -546,12 +575,15 @@ module.exports = function (grunt) {
 
         concurrent: {
             server: [
-              'sass'
+              'sass',
+              'browserify:dev',
+              'browserify:vendor'
             ],
             test: [
 
             ],
             dist: [
+                'browserify',
                 'handlebars',
                 'sass',
                 'imagemin',

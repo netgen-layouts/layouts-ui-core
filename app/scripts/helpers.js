@@ -7,8 +7,10 @@
     } else {
         factory(window.helpers); // Browser global
     }
-}(function (_, Handlebars, App){
+}(function (_, Handlebars, Core){
   'use strict';
+
+  var _ = require('underscore');
 
   var safe = function(str){
     return new Handlebars.SafeString(str);
@@ -17,11 +19,11 @@
   var Helpers = {
 
     t: function(key){
-      return App.i18n.t(key);
+      return Core.i18n.t(key);
     },
 
     num_prefix: function(num){
-      if(num > 0){return "+";}
+      if(num > 0){return '+';}
       //if(num < 0){return "-";}
     },
 
@@ -128,11 +130,11 @@
     },
 
     url_for: function(name, opts){
-      return App.router.url_for(name, opts.hash || {});
+      return Core.router.url_for(name, opts.hash || {});
     },
 
     link_to: function(title, route, opts){
-      var url = App.router.url_for(route, opts.hash || {});
+      var url = Core.router.url_for(route, opts.hash || {});
       return safe('<a href="'+url+'">'+title+'</a>');
     },
 
