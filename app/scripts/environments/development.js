@@ -1,9 +1,7 @@
-define([], function(){
-  'use strict';
+'use strict';
 
-  return {
-    name: 'development',
-    base_url: 'http://localhost:3000/'
-  };
-
-});
+module.exports =  {
+  name: 'development',
+  base_url: '/bm/api/v1/',
+  cb_base_url: '/cb/api/v1/'
+};

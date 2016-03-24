@@ -1,6 +1,6 @@
 {
-    "name": "netgen/block-manager-ui-bundle",
-    "description": "Netgen Block Manager UI",
+    "name": "netgen/core-ui-components-bundle",
+    "description": "Netgen Core UI Components bundle",
     "authors": [
         {
             "name": "Netgen",
@@ -10,5 +10,10 @@
             "name": "Effectiva",
             "homepage": "http://www.effectiva.hr"
         }
-    ]
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }

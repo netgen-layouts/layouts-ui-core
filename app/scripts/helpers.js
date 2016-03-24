@@ -7,8 +7,10 @@
     } else {
         factory(window.helpers); // Browser global
     }
-}(function (_, Handlebars, App){
+}(function (_, Handlebars, Core){
   'use strict';
+
+  var _ = require('underscore');
 
   var safe = function(str){
     return new Handlebars.SafeString(str);
@@ -17,11 +19,11 @@
   var Helpers = {
 
     t: function(key){
-      return App.i18n.t(key);
+      return Core.i18n.t(key);
     },
 
     num_prefix: function(num){
-      if(num > 0){return "+";}
+      if(num > 0){return '+';}
       //if(num < 0){return "-";}
     },
 
@@ -128,11 +130,11 @@
     },
 
     url_for: function(name, opts){
-      return App.router.url_for(name, opts.hash || {});
+      return Core.router.url_for(name, opts.hash || {});
     },
 
     link_to: function(title, route, opts){
-      var url = App.router.url_for(route, opts.hash || {});
+      var url = Core.router.url_for(route, opts.hash || {});
       return safe('<a href="'+url+'">'+title+'</a>');
     },
 
@@ -151,6 +153,99 @@
     speed: function(number){
       number = number || 300;
       return number / 1000;
+    },
+
+    render_partial: function(template, context){
+      return this.safe(JST[template](context));
+    },
+
+    /**
+       * TODO !
+       *
+       * @method paginate
+       * @param  {String} id
+       * @param  {Object} options
+       * @return {String}
+       */
+    paginate: function(id, options){
+      var view = options.hash.context ? options.hash.context.view : this.view;
+      var view_pager = view.pagers[id];
+      if(!view_pager.pager){return '';}
+
+
+      var context = view_pager.pager;
+      context.id = id;
+      if(options.hash.auto_hide){
+        context.show = context.total_pages > 1;
+      }else{
+        context.show = true;
+      }
+      //console.log('show_if_has_more_than_one_page', options.hash,  context.show_if_has_more_than_one_page);
+      context.pages =  view_pager.pager.render();
+      context.prev_disabled = !view_pager.prev;
+      context.next_disabled = !view_pager.next;
+
+      return safe(this.render_partial('paginator', context));
+    },
+
+
+    /**
+     * Used as handlebars function. For existing view.pager creates dropdown to choose number of collection
+     * items displayed per page. On item select triggers collection.fetch event to update pagination
+     * (number of pages, items per page, ...)
+     * @method pages_selector
+     * @param  {String} id
+     * @return {String}
+     */
+    pages_selector: function(id){
+      var view_pager = this.view.pagers[id];
+      if(!view_pager.pager){return '';}
+      var collection = view_pager.items;
+      var limit = collection.request.read.paging.limit;
+      var context = {
+        id: _.uniqueId('pages_selector'),
+        limit: limit,
+        collection: [
+          {id: 10, name: 10},
+          {id: 20, name: 20},
+          {id: 30, name: 30}
+        ]
+      };
+
+      _.defer(function(){
+        $('#'+context.id).on('change', function(){
+          collection.fetch_filter({
+            paging: { offset: 0, limit: $(this).val() }
+          });
+        });
+      });
+
+      return safe(this.render_partial('pages_selector', context));
+    }, // END OF pages_selector (function)
+
+    get: function(model, property_name){
+      return model.get(property_name);
+    },
+
+    eq: function(val1, val2, options){
+      if(val1 === val2) {
+        return options.fn(this);
+      } else {
+        return options.inverse(this);
+      }
+    },
+
+    if_not_empty: function(context, options){
+      if(_.isEmpty(context)){
+        return options.inverse(this);
+      } else {
+        return options.fn(this);
+      }
+    },
+
+    uid: function(regenerate){
+      regenerate && (this._last_uid = _.uniqueId('uid_'));
+      return this._last_uid;
     }
 
   };

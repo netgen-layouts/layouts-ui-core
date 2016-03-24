@@ -1,62 +1,63 @@
-define(['view'], function(View){
-  'use strict';
+'use strict';
 
-  return View.extend({
+var Core = require('core');
+require('bootstrap'); // we need this for modal
+var View = require('../extended/view');
 
-    template: 'modal',
+module.exports = Core.Modal = View.extend({
 
-    className: 'mymodal modal fade',
+  template: 'modal',
 
-    events: {
-      'click .action_apply':  '$apply',
-      'submit form': '$submit'
-    },
+  className: 'mymodal modal fade',
 
-    initialize: function(){
-      View.prototype.initialize.apply(this, arguments);
-      var self = this;
-      this.$el.on('hidden.bs.modal', function(){
-        self.remove();
-        self.trigger('close');
-      });
-      return this;
-    },
+  events: {
+    'click .action_apply':  '$apply',
+    'submit form': '$submit'
+  },
 
-    insert: function(){
-      this.$el.appendTo(document.body);
-      return this;
-    },
+  initialize: function(options){
+    View.prototype.initialize.apply(this, arguments);
+    this.context.title = options.title;
+    var self = this;
+    this.$el.on('hidden.bs.modal', function(){
+      self.remove();
+      self.trigger('close');
+    });
+    return this;
+  },
 
-    open: function(){
-      if(this.is_open){ return this; }
-      this.render().insert().$el.modal({});
-      this.trigger('open');
-      this.is_open = true;
-      return this;
-    },
+  insert: function(){
+    this.$el.appendTo(document.body);
+    return this;
+  },
 
-    close: function(){
-      this.$el.modal('hide');
-      this.is_open = false;
-      this.trigger('close');
-    },
+  open: function(){
+    console.log('OPEEEEEEEEEEEN');
+    if(this.is_open){ return this; }
+    this.render().insert().$el.modal({});
+    this.trigger('open');
+    this.is_open = true;
+    return this;
+  },
 
-
-    $submit: function(e){
-      e.preventDefault();
-      this.$apply();
-      return this;
-    },
+  close: function(){
+    this.$el.modal('hide');
+    this.is_open = false;
+    this.trigger('close');
+  },
 
 
+  $submit: function(e){
+    e.preventDefault();
+    this.$apply();
+    return this;
+  },
 
-    $apply: function(e){
-      e && e.preventDefault();
-      this.trigger('apply');
-      this.close();
-      return this;
-    },
-
-  });
+  $apply: function(e){
+    e && e.preventDefault();
+    this.trigger('apply');
+    this.close();
+    return this;
+  }
 
 });
