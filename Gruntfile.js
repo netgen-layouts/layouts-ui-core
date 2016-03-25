@@ -109,7 +109,7 @@ module.exports = function (grunt) {
           //  },
             browserify: {
               files: ['<%= yeoman.app %>/scripts/**/*.js'],
-              tasks: ['browserify:dev']
+              tasks: ['browserify:dev', 'concat:dev']
             },
             sass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -269,18 +269,6 @@ module.exports = function (grunt) {
             }]
           }
         },
-        concat: {
-          dev: {
-            src: ['.tmp/scripts/vendor.js', '.tmp/scripts/main.js'],
-            dest: '<%= yeoman.app %>/scripts/bundle.js',
-            options: {
-              // It includes semicolon.js!
-              // This is needed to prevent the two concatenated IIFE's fro each bundle being
-              // interpreted as a function call
-              separator: ';\n'
-            }
-          }
-        },
         browserify: {
           vendor: {
             src: [],
@@ -309,7 +297,7 @@ module.exports = function (grunt) {
         concat: {
           dev: {
             src: ['.tmp/scripts/vendor.js', '.tmp/scripts/main.js'],
-            dest: '<%= yeoman.app %>/scripts/bundle.js',
+            dest: '<%= yeoman.app %>/bundle.js',
             options: {
               // It includes semicolon.js!
               // This is needed to prevent the two concatenated IIFE's fro each bundle being
