@@ -21,6 +21,3 @@ var Core = {
 _.extend(Core, Backbone.Events);
 
 module.exports = Core;
-
-
-

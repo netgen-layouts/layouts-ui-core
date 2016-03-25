@@ -4,6 +4,7 @@ var Core = require('core');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var params_parser = require('./params_parser');
+var Pager = require('core_pager');
 
 module.exports = Core.View = Backbone.View.extend({
 
@@ -38,6 +39,11 @@ module.exports = Core.View = Backbone.View.extend({
       this.listenTo(Core, 'period:changed', this.load);
     }
 
+    if(this.paginate || options.paginate){
+      _.extend(this.events, {
+        'click  .pagination a': '_paginate'
+      });
+    }
 
     //Delegate event to Core;
     this.on('fh', function(){
@@ -298,6 +304,136 @@ module.exports = Core.View = Backbone.View.extend({
     $(el || this.view_items_el && this.$(this.view_items_el) ||  this.$el).html(_.map(items, function(item){
       return new ViewKlass({model: item, parent: this}).render().el;
     }, this));
-  }
+  },
+
+  pager: function(name, items, options){
+      this.pagers || (this.pagers = {});
+      this.pagers[name] || (this.pagers[name] = {});
+      var view_pager = this.pagers[name],
+          current_page,
+          current_offset,
+          total,
+          limit,
+          pager,
+          sliced,
+          is_array = _.isArray(items);
+
+      if(is_array){
+        current_page = options.current_page;
+        limit = options.limit;
+        total = items.length;
+      }else{
+        if(items && !items.request){
+          return items;
+        }
+        if(items){
+          total = items.total_count;
+          current_offset = items.request.read.paging.offset;
+          limit = items.request.read.paging.limit;
+        }else{
+          current_offset = 0;
+        }
+      }
+
+      if(view_pager.pager && view_pager.pager.total && is_array){
+        pager = view_pager.pager;
+        pager.total = total;
+        pager.calculate();
+        if(pager.current_page > pager.total_pages){
+          pager.current_page = pager.total_pages;
+        }
+        pager.calculate();
+      }else{
+        pager = new Pager({
+          current_page: current_page,
+          current_offset: current_offset,
+          total: total,
+          limit: limit
+        });
+      }
+
+      if(is_array){
+        sliced = items.slice(pager.current_offset, pager.current_offset+pager.limit);
+      }else{
+        sliced = items;
+      }
+
+      view_pager = {
+        pager: pager,
+        items: sliced
+      };
+      this.pagers[name] = view_pager;
+      return sliced;
+    },
+
+
+    /**
+     * TODO
+     * @method _paginate
+     * @param  {[type]}  e [description]
+     * @return {[type]}    [description]
+     */
+    _paginate: function(e){
+
+
+        e.preventDefault();
+
+        var $target = $(e.target);
+        var pagination_id = $target.closest('[data-pagination-id]').data('pagination-id');
+
+        var pager_wrapper = this.pagers[pagination_id];
+
+        /*
+         * Case: When top view catches the event
+         */
+        if(!pager_wrapper){return;}
+
+        var pager = pager_wrapper.pager;
+        var collection = pager_wrapper.items;
+        var is_prev_link = $target.hasClass('prev');
+        var is_next_link = $target.hasClass('next');
+        var isnt_prev_or_next_link = !(is_prev_link || is_next_link);
+
+        if(is_prev_link && !pager.prev || is_next_link && !pager.next){
+          return;
+        }
+
+        var page = parseInt($target.text(), 10);
+        var offset = pager.current_offset, new_offset = pager.page(page).offset;
+
+        if(is_prev_link && pager.prev){
+          new_offset = pager.prev.offset;
+        }else if(is_next_link && pager.next){
+          new_offset = pager.next.offset;
+        }else if(isnt_prev_or_next_link && pager.current_page !== page){
+          new_offset = pager.page(page).offset;
+        }
+
+        if(offset !== new_offset){
+
+          if(_.isArray(collection)){
+            pager.current_page = null;
+            pager.current_offset = new_offset;
+            pager.calculate();
+            this.render();
+          }else{
+            var request = collection.request;
+            request.read.paging.offset = new_offset;
+            //request.via = collection.via;
+
+            if(collection.via !== 'read'){
+              var req = {
+                data: request[collection.via].data,
+                paging: request[collection.via].paging
+              };
+
+              collection.fetch({via: collection.via, data: req});
+            }else{
+              collection.fetch({data: request.read}, {via: collection.via});
+            }
+
+          }
+        }
+    }
 
 });

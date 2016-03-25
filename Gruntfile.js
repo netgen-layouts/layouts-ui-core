@@ -109,7 +109,7 @@ module.exports = function (grunt) {
           //  },
             browserify: {
               files: ['<%= yeoman.app %>/scripts/**/*.js'],
-              tasks: ['browserify:dev', 'concat:dev']
+              tasks: ['browserify:dev']
             },
             sass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -289,7 +289,8 @@ module.exports = function (grunt) {
               },
               alias: {
                 'core': './app/scripts/core.js',
-                'core_boot': './app/scripts/core_boot.js'
+                'core_boot': './app/scripts/core_boot.js',
+                'core_pager': './app/scripts/components/pager.js'
               }
             }
           }
@@ -580,7 +581,7 @@ module.exports = function (grunt) {
             'handlebars',
             'concurrent:server',
             'configureProxies:server',
-            'concat:dev',
+            // 'concat:dev',
             'connect:livereload',
             //'open',
             'watch'
