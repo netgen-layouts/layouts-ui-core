@@ -2,14 +2,7 @@
   "name": "app",
   "version": "0.0.0",
   "dependencies": {
-    "backbone": "*",
-    "handlebars": "3.0.3",
-    "jquery": "*",
-    "requirejs": "*",
-    "underscore": "*",
-    "almond": "*",
-    "bootstrap-sass": "*",
-    "jquery-ui": "~1.11.4"
+
   },
   "devDependencies": {}
 }

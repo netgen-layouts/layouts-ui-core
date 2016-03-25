@@ -269,60 +269,18 @@ module.exports = function (grunt) {
             }]
           }
         },
-        // not used since Uglify task does concat,
-        // but still available if needed
-        /*concat: {
-            dist: {}
-        },*/
-
-        /**
-         * Example build file
-         * https://github.com/jrburke/r.js/blob/master/build/example.build.js
-         */
-        // requirejs: {
-        //     options: {
-        //         // `name` and `out` is set by grunt-usemin
-        //         name: '../../bower_components/almond/almond',
-        //         include: ['main'],
-        //         mainConfigFile: '<%= yeoman.app %>/scripts/main.js',
-        //         out: '<%= yeoman.dist %>/scripts/main.js',
-        //         //out: '.tmp/scripts/main.js',
-        //         baseUrl:  '<%= yeoman.app %>/scripts',
-        //         optimize: 'uglify2',
-        //         // TODO: Figure out how to make sourcemaps work with grunt-usemin
-        //         // https://github.com/yeoman/grunt-usemin/issues/30
-        //         generateSourceMaps: true,
-        //         // required to support SourceMaps
-        //         // http://requirejs.org/docs/errors.html#sourcemapcomments
-        //         preserveLicenseComments: false,
-        //         useStrict: true,
-        //         wrap: true,
-        //         uglify2: {
-        //             /*
-        //             output: {
-        //                 beautify: true
-        //             },
-        //             */
-        //             compress: {
-        //                 drop_console: true,
-        //                 drop_debugger: true
-        //             }
-        //         } // https://github.com/mishoo/UglifyJS2
-        //     },
-
-        //     staging: {
-        //       options:{
-        //         paths: {
-        //           "env": 'environments/staging'
-        //         }
-        //       }
-        //     },
-
-        //     development: {
-
-        //     }
-
-        // },
+        concat: {
+          dev: {
+            src: ['.tmp/scripts/vendor.js', '.tmp/scripts/main.js'],
+            dest: '<%= yeoman.app %>/scripts/bundle.js',
+            options: {
+              // It includes semicolon.js!
+              // This is needed to prevent the two concatenated IIFE's fro each bundle being
+              // interpreted as a function call
+              separator: ';\n'
+            }
+          }
+        },
         browserify: {
           vendor: {
             src: [],
@@ -345,6 +303,18 @@ module.exports = function (grunt) {
                 'core': './app/scripts/core.js',
                 'core_boot': './app/scripts/core_boot.js'
               }
+            }
+          }
+        },
+        concat: {
+          dev: {
+            src: ['.tmp/scripts/vendor.js', '.tmp/scripts/main.js'],
+            dest: '<%= yeoman.app %>/scripts/bundle.js',
+            options: {
+              // It includes semicolon.js!
+              // This is needed to prevent the two concatenated IIFE's fro each bundle being
+              // interpreted as a function call
+              separator: ';\n'
             }
           }
         },
@@ -621,6 +591,7 @@ module.exports = function (grunt) {
             'clean:server',
             'concurrent:server',
             //'configureProxies:server',
+            'concat:dev',
             'connect:livereload',
             'handlebars',
             //'open',
