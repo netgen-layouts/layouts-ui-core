@@ -553,8 +553,8 @@ module.exports = function (grunt) {
 
             ],
             dist: [
-                'browserify',
                 'handlebars',
+                'browserify',
                 'sass',
                 'imagemin',
                 'svgmin'
@@ -589,11 +589,11 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
+            'handlebars',
             'concurrent:server',
-            //'configureProxies:server',
+            'configureProxies:server',
             'concat:dev',
             'connect:livereload',
-            'handlebars',
             //'open',
             'watch'
         ]);
