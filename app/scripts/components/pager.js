@@ -20,7 +20,7 @@
     }
     else if(typeof(this.current_offset) !== 'undefined' && this.current_offset !== null){
       this.current_offset = parseInt(this.current_offset, 10);
-      this.current_page   = (this.current_offset / this.limit) + 1;
+      this.current_page   = parseInt((this.current_offset / this.limit), 10) + 1;
     }else{
       throw('Must provide current_page or current_offset');
     }

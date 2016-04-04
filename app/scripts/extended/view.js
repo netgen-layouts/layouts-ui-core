@@ -327,9 +327,9 @@ module.exports = Core.View = Backbone.View.extend({
           return items;
         }
         if(items){
-          total = items.total_count;
-          current_offset = items.request.read.paging.offset;
-          limit = items.request.read.paging.limit;
+          total = items.children_count;
+          current_offset = items.children_offset;
+          limit = items.children_limit;
         }else{
           current_offset = 0;
         }
@@ -345,7 +345,7 @@ module.exports = Core.View = Backbone.View.extend({
         pager.calculate();
       }else{
         pager = new Pager({
-          current_page: current_page,
+          current_page: this.collection.request.read.page,
           current_offset: current_offset,
           total: total,
           limit: limit
@@ -366,6 +366,33 @@ module.exports = Core.View = Backbone.View.extend({
       return sliced;
     },
 
+    paginate: function(e){
+      var $target = $(e.target);
+      var pagination_id = $target.closest('[data-pagination-id]').data('pagination-id');
+
+      var pager_wrapper = this.pagers[pagination_id];
+      var pager = pager_wrapper.pager;
+      var collection = pager_wrapper.items;
+
+      var is_prev_link = $target.hasClass('prev');
+      var is_next_link = $target.hasClass('next');
+
+      if(is_prev_link && !pager.prev || is_next_link && !pager.next){
+        return;
+      }
+
+      var page = parseInt($target.text(), 10);
+
+      pager.current_page = page;
+
+      collection.fetch_list({
+      data: {
+          limit: collection.children_limit,
+          page: page
+        }
+      });
+    },
+
 
     /**
      * TODO
@@ -374,8 +401,6 @@ module.exports = Core.View = Backbone.View.extend({
      * @return {[type]}    [description]
      */
     _paginate: function(e){
-
-
         e.preventDefault();
 
         var $target = $(e.target);
@@ -401,6 +426,7 @@ module.exports = Core.View = Backbone.View.extend({
         var page = parseInt($target.text(), 10);
         var offset = pager.current_offset, new_offset = pager.page(page).offset;
 
+
         if(is_prev_link && pager.prev){
           new_offset = pager.prev.offset;
         }else if(is_next_link && pager.next){
@@ -411,28 +437,12 @@ module.exports = Core.View = Backbone.View.extend({
 
         if(offset !== new_offset){
 
-          if(_.isArray(collection)){
-            pager.current_page = null;
-            pager.current_offset = new_offset;
-            pager.calculate();
-            this.render();
-          }else{
-            var request = collection.request;
-            request.read.paging.offset = new_offset;
-            //request.via = collection.via;
-
-            if(collection.via !== 'read'){
-              var req = {
-                data: request[collection.via].data,
-                paging: request[collection.via].paging
-              };
-
-              collection.fetch({via: collection.via, data: req});
-            }else{
-              collection.fetch({data: request.read}, {via: collection.via});
-            }
-
-          }
+          collection.fetch_list({
+              data: {
+                page: page,
+                limit: pager.limit
+              }
+            });
         }
     }
 
