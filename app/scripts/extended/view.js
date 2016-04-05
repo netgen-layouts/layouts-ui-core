@@ -39,11 +39,11 @@ module.exports = Core.View = Backbone.View.extend({
       this.listenTo(Core, 'period:changed', this.load);
     }
 
-    if(this.paginate || options.paginate){
-      _.extend(this.events, {
-        'click  .pagination a': '_paginate'
-      });
-    }
+    // if(this.paginate || this.options.paginate){
+    //   _.extend(this.events, {
+    //     'click  .pagination a': 'paginate'
+    //   });
+    // }
 
     //Delegate event to Core;
     this.on('fh', function(){
@@ -367,6 +367,10 @@ module.exports = Core.View = Backbone.View.extend({
     },
 
     paginate: function(e){
+      e.preventDefault();
+
+      console.log('paginate');
+
       var $target = $(e.target);
       var pagination_id = $target.closest('[data-pagination-id]').data('pagination-id');
 
@@ -382,68 +386,22 @@ module.exports = Core.View = Backbone.View.extend({
       }
 
       var page = parseInt($target.text(), 10);
+      var offset = pager.current_offset, new_offset = pager.page(page).offset;
 
-      pager.current_page = page;
+      if(is_prev_link && pager.prev){
+        page = pager.current_page - 1;
+      }else if(is_next_link && pager.next){
+        page = pager.current_page + 1;
+      }
 
-      collection.fetch_list({
-      data: {
-          limit: collection.children_limit,
-          page: page
-        }
-      });
-    },
+      if(offset !== new_offset){
 
-
-    /**
-     * TODO
-     * @method _paginate
-     * @param  {[type]}  e [description]
-     * @return {[type]}    [description]
-     */
-    _paginate: function(e){
-        e.preventDefault();
-
-        var $target = $(e.target);
-        var pagination_id = $target.closest('[data-pagination-id]').data('pagination-id');
-
-        var pager_wrapper = this.pagers[pagination_id];
-
-        /*
-         * Case: When top view catches the event
-         */
-        if(!pager_wrapper){return;}
-
-        var pager = pager_wrapper.pager;
-        var collection = pager_wrapper.items;
-        var is_prev_link = $target.hasClass('prev');
-        var is_next_link = $target.hasClass('next');
-        var isnt_prev_or_next_link = !(is_prev_link || is_next_link);
-
-        if(is_prev_link && !pager.prev || is_next_link && !pager.next){
-          return;
-        }
-
-        var page = parseInt($target.text(), 10);
-        var offset = pager.current_offset, new_offset = pager.page(page).offset;
-
-
-        if(is_prev_link && pager.prev){
-          new_offset = pager.prev.offset;
-        }else if(is_next_link && pager.next){
-          new_offset = pager.next.offset;
-        }else if(isnt_prev_or_next_link && pager.current_page !== page){
-          new_offset = pager.page(page).offset;
-        }
-
-        if(offset !== new_offset){
-
-          collection.fetch_list({
-              data: {
-                page: page,
-                limit: pager.limit
-              }
-            });
-        }
+        collection.fetch_list_by_model_id(2, {
+          data: {
+            limit: collection.children_limit,
+            page: page
+          }
+        });
+      }
     }
-
 });

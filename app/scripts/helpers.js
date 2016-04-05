@@ -165,6 +165,10 @@ module.exports = {
     var view_pager = view.pagers[id];
     if(!view_pager.pager){return '';}
 
+
+
+    console.log($('.pagination').data());
+
     var context = view_pager.pager;
     context.id = id;
     if(options.hash.auto_hide){
@@ -174,8 +178,8 @@ module.exports = {
     }
 
     context.pages =  view_pager.pager.render();
-    context.prev_disabled = !view_pager.prev;
-    context.next_disabled = !view_pager.next;
+    context.prev_disabled = !context.prev;
+    context.next_disabled = !context.next;
 
     return safe(render_partial('paginator', context));
   },
@@ -198,9 +202,10 @@ module.exports = {
       id: _.uniqueId('pages_selector'),
       limit: limit,
       collection: [
+        {id: 5, name: 5},
         {id: 10, name: 10},
         {id: 25, name: 25},
-        {id: 50, name: 50}
+        //{id: 50, name: 50}
       ]
     };
 
