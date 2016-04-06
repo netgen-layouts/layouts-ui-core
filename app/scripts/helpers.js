@@ -165,10 +165,6 @@ module.exports = {
     var view_pager = view.pagers[id];
     if(!view_pager.pager){return '';}
 
-
-
-    console.log($('.pagination').data());
-
     var context = view_pager.pager;
     context.id = id;
     if(options.hash.auto_hide){
@@ -194,6 +190,7 @@ module.exports = {
    * @return {String}
    */
   pages_selector: function(id){
+    var view = this.view;
     var view_pager = this.view.pagers[id];
     if(!view_pager.pager){return '';}
     var collection = view_pager.items;
@@ -211,12 +208,26 @@ module.exports = {
 
     _.defer(function(){
       $('#'+context.id).on('change', function(){
-        collection.fetch_list({
-          data: {
-            page: 1,
-            limit: $(this).val()
+        var data  = {
+          page: 1,
+          limit: $(this).val()
+        };
+
+        if(view.name === 'search'){
+          if(view.collection.path.length){
+            collection.fetch_list_by_model_id(view.collection.last_model.id, {
+              data: data
+            });
+          }else{
+            collection.search_data({
+              data: _.extend(view.tabs.search_params(), data)
+            });
           }
-        });
+        }else{
+          collection.fetch_list({
+            data: data
+          });
+        }
       });
     });
 

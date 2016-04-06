@@ -154,6 +154,19 @@ module.exports = Core.View = Backbone.View.extend({
     return this;
   },
 
+   /**
+   * Empty element and stops all listeners.
+   * @method empty
+   * @return {Object} [View]
+   */
+  empty: function() {
+    console.log('view:empty', this.template || this.cid);
+    this.remove_inner();
+    this.$el.empty().off();
+    this.$elements && this.$elements.empty().off();
+    this.stopListening();
+    return this;
+  },
 
   remove_inner: function(){
     var view;
@@ -366,10 +379,8 @@ module.exports = Core.View = Backbone.View.extend({
       return sliced;
     },
 
-    paginate: function(e){
+    paginate: function(e, search_data){
       e.preventDefault();
-
-      console.log('paginate');
 
       var $target = $(e.target);
       var pagination_id = $target.closest('[data-pagination-id]').data('pagination-id');
@@ -396,12 +407,20 @@ module.exports = Core.View = Backbone.View.extend({
 
       if(offset !== new_offset){
 
-        collection.fetch_list_by_model_id(2, {
-          data: {
-            limit: collection.children_limit,
-            page: page
-          }
-        });
+        var data = {
+          limit: collection.children_limit,
+          page: page
+        };
+
+        if(search_data && !collection.path.length){
+          collection.search_data({
+            data: Core._.extend(data, search_data)
+          });
+        }else{
+          collection.fetch_list({
+            data: data
+          });
+        }
       }
     }
 });
