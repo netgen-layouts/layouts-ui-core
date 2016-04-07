@@ -190,14 +190,14 @@ module.exports = {
    * @return {String}
    */
   pages_selector: function(id){
+    console.log(this);
     var view = this.view;
-    var view_pager = this.view.pagers[id];
+    var view_pager = view.pagers[id];
     if(!view_pager.pager){return '';}
     var collection = view_pager.items;
-    var limit = collection.children_limit;
     var context = {
       id: _.uniqueId('pages_selector'),
-      limit: limit,
+      limit: collection.children_limit,
       collection: [
         {id: 5, name: 5},
         {id: 10, name: 10},
@@ -213,16 +213,10 @@ module.exports = {
           limit: $(this).val()
         };
 
-        if(view.name === 'search'){
-          if(view.collection.path.length){
-            collection.fetch_list_by_model_id(view.collection.last_model.id, {
-              data: data
-            });
-          }else{
-            collection.search_data({
-              data: _.extend(view.tabs.search_params(), data)
-            });
-          }
+        if(view.name === 'search' && !view.collection.path.length){
+          collection.search_data({
+            data: _.extend(data, view.tabs.search_params())
+          });
         }else{
           collection.fetch_list({
             data: data
