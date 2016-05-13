@@ -22,12 +22,12 @@ module.exports = Core.Model = Backbone.Model.extend({
   },
 
   error_handler: function(model, response){
-    console.log(response);
-    Core.show_error({
-      model: model,
-      title:  response.responseJSON ? response.responseJSON.status_text : 'Unknown error',
-      body: response.responseJSON ? response.responseJSON.message : 'Unknown message.'
-    });
+    console.error(response.responseJSON || 'Unknown error');
+    // Core.show_error({
+    //   model: model,
+    //   title:  response.responseJSON ? response.responseJSON.status_text : 'Unknown error',
+    //   body: response.responseJSON ? response.responseJSON.message : 'Unknown message.'
+    // });
   },
 
   //TODO: maybe add this to collection
@@ -45,7 +45,7 @@ module.exports = Core.Model = Backbone.Model.extend({
         this.set(response).trigger('save:success');
       }.bind(this))
       .fail(function(response){
-        this.set(response.responseJSON);
+        this.set(response.responseJSON).trigger('save:error');;
         this.error_handler(this, response);
       }.bind(this));
   },

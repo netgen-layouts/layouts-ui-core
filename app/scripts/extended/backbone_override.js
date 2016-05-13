@@ -49,15 +49,18 @@ var Backbone = require('backbone');
 
     var via = options.via || method;
     //delete(options.via);
+    console.log(options.via, method);
 
     var xhr = sync(method, what, options)
       .done(function(){
         var save_method = /create|update/.test(via);
+        method === 'read' && what.trigger(method+':'+'success', what, xhr, options);
         what.trigger(via+':'+'success', what, xhr, options);
         save_method && what.trigger('save:'+'success', what, xhr, options);
       })
       .fail(function(){
         var save_method = /create|update/.test(via);
+        method === 'read' && what.trigger(method+':'+'success', what, xhr, options);
         what.trigger(via+':'+'error', what, xhr, options);
         save_method && what.trigger('save:'+'error', what, xhr, options);
       });
