@@ -36,25 +36,26 @@ $.fn.ajax_submit = function (opts) {
 };
 
 $.fn.browser_tabs = function () {
-  var $this = $(this);
+  var $this = $(this),
+      $control = $this.children('ul');
 
-  $this.find('li:first').addClass('active');
-  $('.tab-pane').hide();
-  $('.tab-pane:first').show();
+  $control.find('li:first').addClass('active');
+  $this.find('.tab-pane').hide();
+  $this.find('.tab-pane:first').show();
 
-  $this.find('li a').click(function(e){
+  $control.find('li a').click(function(e){
     e.preventDefault();
 
     var $id = $(this);
     var name = $id.attr('id');
 
     // tab
-    $this.find('li').removeClass('active');
+    $control.find('li').removeClass('active');
     $id.closest('li').addClass('active');
 
     // tab content
-    $('.tab-pane').hide();
-    $('#'+ name + '-tab').show();
+    $this.find('.tab-pane').hide();
+    $this.find('#'+ name + '-tab').show();
   });
 };
 

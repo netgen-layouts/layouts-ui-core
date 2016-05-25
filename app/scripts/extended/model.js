@@ -46,7 +46,7 @@ module.exports = Core.Model = Backbone.Model.extend({
         this.set(response).trigger(event_name+':success');
       }.bind(this))
       .fail(function(response){
-        this.set(response.responseJSON).trigger(event_name+':error');;
+        this.set(response.responseJSON).trigger(event_name+':error');
         this.error_handler(this, response);
       }.bind(this));
   },
