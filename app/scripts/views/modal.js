@@ -12,6 +12,7 @@ module.exports = Core.Modal = View.extend({
 
   events: {
     'click .action_apply':  '$apply',
+    'click .action_cancel':  '$cancel',
     'submit form': '$submit'
   },
 
@@ -58,6 +59,15 @@ module.exports = Core.Modal = View.extend({
     this.trigger('apply');
     this.close();
     return this;
+  },
+
+  $cancel: function(e){
+    e && e.preventDefault();
+    this.trigger('cancel');
+    this.close();
+    return this;
   }
+
+
 
 });
