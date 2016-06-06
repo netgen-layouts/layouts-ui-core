@@ -39,8 +39,12 @@ module.exports = Core.Collection = Backbone.Collection.extend({
   },
 
   parse: function(resp){
-    this.total = resp.total; //NOTE: for pagination... see what to do with this
-    return ('values' in resp) ? resp.values : resp;
+    if(_.has(resp, 'values')){
+      this.total = resp.total; //NOTE: for pagination... see what to do with this
+      return resp.values;
+    }else{
+      return resp;
+    }
   },
 
   fetch_once: function(){
