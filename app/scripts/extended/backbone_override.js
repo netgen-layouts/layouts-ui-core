@@ -49,7 +49,7 @@ var Backbone = require('backbone');
 
     var via = options.via || method;
     //delete(options.via);
-    console.log(options.via, method);
+    // console.log(options.via, method);
 
     var xhr = sync(method, what, options)
       .done(function(){
