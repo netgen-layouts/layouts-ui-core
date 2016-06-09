@@ -312,7 +312,6 @@ module.exports = Core.View = Backbone.View.extend({
 
   render_items: function(items, el, ViewItem){
     items || (items = this.collection.models);
-    if(!items.length){return this;}
     var ViewKlass = ViewItem || this.ViewItem;
     var $el = $(el || this.view_items_el && this.$(this.view_items_el) ||  this.$el);
     // console.log('RENDER ITEMS', $el);
