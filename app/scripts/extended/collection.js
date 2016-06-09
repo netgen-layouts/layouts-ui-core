@@ -62,6 +62,18 @@ module.exports = Core.Collection = Backbone.Collection.extend({
     return _.pluck(this.selected(), 'id');
   },
 
+
+
+  /**
+   * Allow you to create indexes on collection
+   * =========================================
+   * example:
+   *
+   * indexes: [
+   *  ['attribute1', 'attribute2'], //combined index
+   *  ['name']
+   * ],
+   */
   create_index: function(){
     //if(!(this.via === 'read' && this.indexes)){return;}
     this.index = {};

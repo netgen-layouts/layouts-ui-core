@@ -55,13 +55,13 @@ var Backbone = require('backbone');
       .done(function(){
         var save_method = /create|update/.test(via);
         method === 'read' && what.trigger(method+':'+'success', what, xhr, options);
-        what.trigger(via+':'+'success', what, xhr, options);
+        method !== via && what.trigger(via+':'+'success', what, xhr, options);
         save_method && what.trigger('save:'+'success', what, xhr, options);
       })
       .fail(function(){
         var save_method = /create|update/.test(via);
         method === 'read' && what.trigger(method+':'+'success', what, xhr, options);
-        what.trigger(via+':'+'error', what, xhr, options);
+        method !== via && what.trigger(via+':'+'error', what, xhr, options);
         save_method && what.trigger('save:'+'error', what, xhr, options);
       });
 

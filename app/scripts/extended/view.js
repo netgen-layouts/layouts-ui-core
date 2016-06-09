@@ -311,12 +311,16 @@ module.exports = Core.View = Backbone.View.extend({
 
 
   render_items: function(items, el, ViewItem){
-    console.log('render items ----------------------');
     items || (items = this.collection.models);
+    if(!items.length){return this;}
     var ViewKlass = ViewItem || this.ViewItem;
-    $(el || this.view_items_el && this.$(this.view_items_el) ||  this.$el).html(_.map(items, function(item){
+    var $el = $(el || this.view_items_el && this.$(this.view_items_el) ||  this.$el);
+    // console.log('RENDER ITEMS', $el);
+    // console.groupCollapsed('ITEMS');
+    $el.html(_.map(items, function(item){
       return new ViewKlass({model: item, parent: this}).render().el;
     }, this));
+    // console.groupEnd('ITEMS');
   },
 
   pager: function(name, items, options){
