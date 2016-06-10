@@ -17,6 +17,26 @@ $.fn.toJSON = function() {
 };
 
 
+function clean_backbone_views(){
+  var view;
+  $(this).find('[data-view]').each(function(){
+    view = $(this).data('_view');
+    view && view.remove();
+  });
+}
+
+var html = $.fn.html;
+$.fn.html = function(){
+  clean_backbone_views();
+  return html.apply(this, arguments);
+}
+
+var text = $.fn.text;
+$.fn.text = function(){
+  clean_backbone_views();
+  return text.apply(this, arguments);
+}
+
 $.fn.read_data_and_remove_key = function(name){
   var $this = $(this);
   var val = $this.data(name);

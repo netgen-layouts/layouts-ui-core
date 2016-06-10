@@ -169,11 +169,7 @@ module.exports = Core.View = Backbone.View.extend({
   },
 
   remove_inner: function(){
-    var view;
-    this.$('[data-view]').each(function(){
-      view = $(this).data('_view');
-      view && view.remove();
-    });
+    this.constructor.remove_views_in_element(this.$el);
   },
 
 
@@ -426,4 +422,12 @@ module.exports = Core.View = Backbone.View.extend({
         }
       }
     }
+},{
+  remove_views_in_element: function(element){
+    var view;
+    $(element).find('[data-view]').each(function(){
+      view = $(this).data('_view');
+      view && view.remove();
+    });
+  }
 });
