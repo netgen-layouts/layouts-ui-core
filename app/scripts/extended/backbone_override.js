@@ -42,30 +42,28 @@ var Backbone = require('backbone');
 
   var sync = Backbone.sync;
 
+
+
+
   Backbone.sync = function(method, what, options){
-    //options.data || (options.data = {});
+    var collection = what.collection,
+        via = options.via || method;
+
     Backbone.defaults && _.extend(options, Backbone.defaults() || {});
     Backbone._cacheRequest.apply(this, arguments);
 
-    var via = options.via || method;
-    //delete(options.via);
-    // console.log(options.via, method);
+    var xhr = sync(method, what, options).always(function(){
+                var status = xhr.status,
+                    isSuccess = status >= 200 && status < 300 || status === 304,
+                    outcome = isSuccess ? 'success' : 'error';
 
-    var xhr = sync(method, what, options)
-      .done(function(){
-        var save_method = /create|update/.test(via);
-        method === 'read' && what.trigger(method+':'+'success', what, xhr, options);
-        via !== 'read' && what.trigger(via+':'+'success', what, xhr, options);
-        save_method && what.trigger('save:'+'success', what, xhr, options);
-      })
-      .fail(function(){
-        var save_method = /create|update/.test(via);
-        method === 'read' && what.trigger(method+':'+'success', what, xhr, options);
-        via !== 'read' && what.trigger(via+':'+'error', what, xhr, options);
-        save_method && what.trigger('save:'+'error', what, xhr, options);
-      });
+                method === 'read'              && what.trigger(method+':'+outcome, what, xhr, options);
+                via !== 'read'                 && what.trigger(via+':'+outcome, what, xhr, options);
+                /create|update/.test(via)      && what.trigger('save:'+outcome, what, xhr, options);
+                via === 'delete' && collection && collection.trigger(via+':'+outcome, what, xhr, options);
+              });
 
-    return xhr;
+      return xhr;
   };
 
 

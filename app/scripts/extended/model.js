@@ -22,7 +22,7 @@ module.exports = Core.Model = Backbone.Model.extend({
   },
 
   error_handler: function(model, response){
-    console.error(response.responseJSON || 'Unknown error');
+    console.error(model, response);
     // Core.show_error({
     //   model: model,
     //   title:  response.responseJSON ? response.responseJSON.status_text : 'Unknown error',
