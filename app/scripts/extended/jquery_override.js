@@ -79,4 +79,50 @@ $.fn.browser_tabs = function () {
   });
 };
 
+
+$(document)
+  .on('click', '.xeditable .js-edit', function(e){
+    e.preventDefault();
+    var $this = $(this),
+        $xeditable = $this.closest('.xeditable'),
+        $form = $xeditable.find('.form'),
+        form_html = $form.data('original_html');
+
+        $xeditable.find('.current').hide();
+        $form.html(form_html);
+
+  }).on('click', '.xeditable .js-cancel', function(e){
+    e.preventDefault();
+    var $this = $(this),
+        $xeditable = $this.closest('.xeditable');
+        $xeditable.find('.form').empty();
+        $xeditable.find('.current').show();
+
+  }).on('click', '.xeditable .js-apply', function(e){
+    e.preventDefault();
+    var $this = $(this),
+        $xeditable = $this.closest('.xeditable'),
+        name = $xeditable.data('xeditableName'),
+        view = $this.closest('[data-view]').data('_view');
+        console.log('xeditable:apply:'+name, view);
+        view && view.trigger('xeditable:apply:'+name);
+  });
+
+
+
+$.fn.xeditable = function(){
+
+
+  return $(this).each(function(){
+    var $this = $(this),
+        $form = $this.find('.form');
+
+    var form_html = $form.html();
+    $form.data('original_html', form_html);
+    $form.empty();
+
+
+  });
+};
+
 module.exports = $;
