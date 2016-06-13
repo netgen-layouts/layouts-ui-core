@@ -229,6 +229,11 @@ module.exports = Core.View = Backbone.View.extend({
     return this;
   },
 
+  trigger_with_global: function(event){
+    this.trigger(event, {self: this});
+    Core.trigger(event, {view: this});
+  },
+
   _render: function(){
     if(!this.in_sight){return false;}
     this.flush();

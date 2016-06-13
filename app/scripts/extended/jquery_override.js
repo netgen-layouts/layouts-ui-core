@@ -29,13 +29,13 @@ var html = $.fn.html;
 $.fn.html = function(){
   clean_backbone_views();
   return html.apply(this, arguments);
-}
+};
 
 var text = $.fn.text;
 $.fn.text = function(){
   clean_backbone_views();
   return text.apply(this, arguments);
-}
+};
 
 $.fn.read_data_and_remove_key = function(name){
   var $this = $(this);
@@ -54,6 +54,13 @@ $.fn.ajax_submit = function (opts) {
     data: $this.serialize()
   });
 };
+
+
+
+$.fn.closest_view = function () {
+  return $(this).closest('[data-view]').data('_view');
+};
+
 
 $.fn.browser_tabs = function () {
   var $this = $(this),
@@ -86,10 +93,11 @@ $(document)
     var $this = $(this),
         $xeditable = $this.closest('.xeditable'),
         $form = $xeditable.find('.form'),
+        view = $this.closest_view(),
         form_html = $form.data('original_html');
-
         $xeditable.find('.current').hide();
         $form.html(form_html);
+        view && view.trigger_with_global('plugins:reinitialize');
 
   }).on('click', '.xeditable .js-cancel', function(e){
     e.preventDefault();
@@ -103,9 +111,9 @@ $(document)
     var $this = $(this),
         $xeditable = $this.closest('.xeditable'),
         name = $xeditable.data('xeditableName'),
-        view = $this.closest('[data-view]').data('_view');
-        console.log('xeditable:apply:'+name, view);
+        view = $this.closest_view();
         view && view.trigger('xeditable:apply:'+name);
+
   });
 
 
@@ -117,11 +125,37 @@ $.fn.xeditable = function(){
     var $this = $(this),
         $form = $this.find('.form');
 
+
+    if($form.data('original_html')) {return;}
     var form_html = $form.html();
     $form.data('original_html', form_html);
+
     $form.empty();
 
+  });
+};
 
+
+
+function dependable_select_detect(master_select){
+  var
+    $this = $(master_select),
+    val = $this.val(),
+    $parent = $this.closest('.js-dependable-selects-group');
+
+    $parent.find('[data-linked-value]').hide();
+    $parent.find('[data-linked-value="'+val+'"]').show();
+}
+
+
+$(document).on('click', '.js-dependable-selects-group .js-master', function(){
+  dependable_select_detect(this);
+});
+
+
+$.fn.dependable_select = function(){
+  $(this).each(function(){
+    dependable_select_detect(this);
   });
 };
 
