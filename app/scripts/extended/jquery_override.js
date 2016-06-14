@@ -148,7 +148,7 @@ function dependable_select_detect(master_select){
 }
 
 
-$(document).on('click', '.js-dependable-selects-group .js-master', function(){
+$(document).on('change', '.js-dependable-selects-group .js-master', function(){
   dependable_select_detect(this);
 });
 
