@@ -17,9 +17,9 @@ $.fn.toJSON = function() {
 };
 
 
-function clean_backbone_views(){
+function clean_backbone_views(el){
   var view;
-  $(this).find('[data-view]').each(function(){
+  $(el).find('[data-view]').each(function(){
     view = $(this).data('_view');
     view && view.remove();
   });
@@ -27,13 +27,13 @@ function clean_backbone_views(){
 
 var html = $.fn.html;
 $.fn.html = function(){
-  clean_backbone_views();
+  clean_backbone_views(this);
   return html.apply(this, arguments);
 };
 
 var text = $.fn.text;
 $.fn.text = function(){
-  clean_backbone_views();
+  clean_backbone_views(this);
   return text.apply(this, arguments);
 };
 

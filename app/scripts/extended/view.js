@@ -316,11 +316,11 @@ module.exports = Core.View = Backbone.View.extend({
     var ViewKlass = ViewItem || this.ViewItem;
     var $el = $(el || this.view_items_el && this.$(this.view_items_el) ||  this.$el);
     // console.log('RENDER ITEMS', $el);
-    // console.groupCollapsed('ITEMS');
+    console.groupCollapsed('RENDER: inner items');
     $el.html(_.map(items, function(item){
       return new ViewKlass({model: item, parent: this}).render().el;
     }, this));
-    // console.groupEnd('ITEMS');
+    console.groupEnd('RENDER: inner items');
   },
 
   pager: function(name, items, options){
