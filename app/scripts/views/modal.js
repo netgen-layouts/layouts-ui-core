@@ -33,7 +33,6 @@ module.exports = Core.Modal = View.extend({
   },
 
   open: function(){
-    console.log('OPEEEEEEEEEEEN');
     if(this.is_open){ return this; }
     this.render().insert().$el.modal({});
     this.trigger('open');
