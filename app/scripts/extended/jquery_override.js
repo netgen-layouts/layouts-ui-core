@@ -96,13 +96,16 @@ $(document)
         view = $this.closest_view(),
         form_html = $form.data('original_html');
         $xeditable.find('.current').hide();
+        view.$el.addClass('xeditable-active');
         $form.html(form_html);
         view && view.trigger_with_global('plugins:reinitialize');
 
   }).on('click', '.xeditable .js-cancel', function(e){
     e.preventDefault();
     var $this = $(this),
+        view = $this.closest_view(),
         $xeditable = $this.closest('.xeditable');
+        view.$el.removeClass('xeditable-active');
         $xeditable.find('.form').empty();
         $xeditable.find('.current').show();
 
@@ -112,6 +115,7 @@ $(document)
         $xeditable = $this.closest('.xeditable'),
         name = $xeditable.data('xeditableName'),
         view = $this.closest_view();
+        view.$el.removeClass('xeditable-active');
         view && view.trigger('xeditable:apply:'+name);
 
   });

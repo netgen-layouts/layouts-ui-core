@@ -59,7 +59,7 @@ var Backbone = require('backbone');
 
                 method === 'read'              && what.trigger(method+':'+outcome, what, xhr, options);
                 via !== 'read'                 && what.trigger(via+':'+outcome, what, xhr, options);
-                /create|update/.test(via)      && what.trigger('save:'+outcome, what, xhr, options);
+                /create|update|patch/.test(via)      && what.trigger('save:'+outcome, what, xhr, options);
                 via === 'delete' && collection && collection.trigger(via+':'+outcome, what, xhr, options);
               });
 
