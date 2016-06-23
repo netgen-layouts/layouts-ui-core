@@ -232,6 +232,13 @@ module.exports = {
     return model.get(property_name);
   },
 
+
+  get_column: function(model, property_name){
+    var columns = model.get('columns');
+    return columns ? columns[property_name] : '';
+  },
+
+
   eq: function(val1, val2, options){
     if(val1 === val2) {
       return options.fn(this);
