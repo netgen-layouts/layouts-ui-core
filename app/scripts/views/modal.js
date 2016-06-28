@@ -20,6 +20,8 @@ module.exports = Core.Modal = View.extend({
   initialize: function(options){
     View.prototype.initialize.apply(this, arguments);
     this.context.title = options.title;
+    this.context.cancel_disabled = options.cancel_disabled || false;
+    console.log(this.context);
     var self = this;
     this.$el.attr('tabindex', -1);
     this.$el.on('hidden.bs.modal', function(){

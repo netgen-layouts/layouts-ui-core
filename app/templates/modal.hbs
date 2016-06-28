@@ -9,7 +9,9 @@
       </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-link action_cancel" data-dismiss="modal">Cancel</button>
+      {{#unless cancel_disabled}}
+        <button type="button" class="btn btn-link action_cancel" data-dismiss="modal">Cancel</button>
+      {{/unless}}
       <button type="button" class="btn btn-primary action_apply green">OK</button>
     </div>
   </div>

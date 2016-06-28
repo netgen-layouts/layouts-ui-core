@@ -12,10 +12,7 @@ var Core = {
   env: Env,
   _: _,
   Backbone: Backbone,
-  g: {},
-  show_error: function(options){
-    new Core.Modal(options).open();
-  }
+  g: {}
 };
 
 _.extend(Core, Backbone.Events);

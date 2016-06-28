@@ -6,12 +6,6 @@ var Backbone = require('backbone');
 
 module.exports = Core.Model = Backbone.Model.extend({
 
-  initialize: function(){
-    Backbone.Model.prototype.initialize.apply(this, arguments);
-    this.on('error', this.error_handler);
-    return this;
-  },
-
   get: function(attr) {
     // Call the getter if available
     if (attr in this) {
@@ -21,14 +15,6 @@ module.exports = Core.Model = Backbone.Model.extend({
     return Backbone.Model.prototype.get.call(this, attr);
   },
 
-  error_handler: function(model, response){
-    console.error(model, response);
-    // Core.show_error({
-    //   model: model,
-    //   title:  response.responseJSON ? response.responseJSON.status_text : 'Unknown error',
-    //   body: response.responseJSON ? response.responseJSON.message : 'Unknown message.'
-    // });
-  },
 
   //TODO: maybe add this to collection
   trigger: function(name, model, resp, options){
