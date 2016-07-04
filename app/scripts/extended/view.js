@@ -240,7 +240,7 @@ module.exports = Core.View = Backbone.View.extend({
     this.render_count++;
     this.context = _.extend({
       view: this,
-      // params: Core.router.params,
+      params: Core.router && Core.router.params,
       model: this.model,
       collection: this.collection
     }, this.context);

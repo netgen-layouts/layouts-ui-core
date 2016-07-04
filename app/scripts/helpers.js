@@ -55,6 +55,12 @@ module.exports = {
     return a == b ? safe('selected="selected"') : '';  // jshint ignore:line
   },
 
+  option_value: function(value, param) {
+    var out = 'value="'+value+'"';
+    param == value && (out += ' selected="selected"');
+    return safe(out);
+  },
+
   animated_number: function(model, attribute, opts){
     var start = model.previous(attribute) || 0;
     var end = model.get(attribute);
