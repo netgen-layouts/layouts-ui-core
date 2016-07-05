@@ -218,6 +218,11 @@ module.exports = Core.View = Backbone.View.extend({
     return this;
   },
 
+  render_to: function(el){
+    $(el).html(this.$el);
+    return this.render();
+  },
+
   flush: function(){
     this.new_data = false;
     return this;
