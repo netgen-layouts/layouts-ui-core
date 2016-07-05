@@ -71,6 +71,14 @@ module.exports = Core.Model = Backbone.Model.extend({
     return  Backbone.Model.prototype.fetch.call(this, options);
   },
 
+  fetch_once: function(){
+    console.log("fetch_once loaded", this.loaded);
+    if(this.loaded){return this.loaded;}
+    var promise = this.fetch.apply(this, arguments)
+    this.loaded = promise;
+    return promise;
+  },
+
   urlRoot: function(){
     if(this.content_browser){
       return Core.env.cb_base_url + _.result(this, 'path');

@@ -48,8 +48,10 @@ module.exports = Core.Collection = Backbone.Collection.extend({
   },
 
   fetch_once: function(){
-    if(this.cached && this.length){return null;}
-    return Backbone.Collection.prototype.fetch.apply(this, arguments);
+    if(this.loaded){return this.loaded;}
+    var promise = this.fetch.apply(this, arguments);
+    this.loaded = promise;
+    return promise
   },
 
   selected: function(){

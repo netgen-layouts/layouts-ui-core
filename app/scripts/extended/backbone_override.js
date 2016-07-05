@@ -89,7 +89,8 @@ var Backbone = require('backbone');
       memo[m.replace(':', '')] = args[i]; return memo;
     }, {});
 
-    args && args.unshift(this.params);
+    args = [this.params];
+    // args && args.unshift(this.params);
     return args;
   };
 
@@ -130,6 +131,7 @@ var Backbone = require('backbone');
   };
 
   Backbone.Router.prototype.url_for = function (name, params, opts){
+    console.log(name, params, opts);
     params || (params = {});
     opts || (opts = {});
 
