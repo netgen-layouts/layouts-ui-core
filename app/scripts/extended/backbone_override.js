@@ -81,6 +81,18 @@ var Backbone = require('backbone');
   var _extractParametersOriginal = Backbone.Router.prototype._extractParameters;
 
 
+  function extract_query(url){
+    var query = url.split('?')[1], pair;
+    if(!query){return null;}
+    return _.reduce(query.split('&'), function(memo, str){
+      pair = str.split('=');
+      memo[pair[0]] = pair[1];
+      return memo;
+    }, {})
+
+  }
+
+
   Backbone.Router.prototype._extractParameters = function(route, fragment, name){
     var args = _extractParametersOriginal.apply(this, arguments);
     this._inverted_routes || (this._inverted_routes = _.invert(this.routes));
@@ -88,6 +100,9 @@ var Backbone = require('backbone');
     this.params = _.reduce(this._inverted_routes[name].match(/:(\w+)/g), function(memo, m, i){
       memo[m.replace(':', '')] = args[i]; return memo;
     }, {});
+
+
+    _.extend(this.params, extract_query(window.location.href))
 
     args = [this.params];
     // args && args.unshift(this.params);

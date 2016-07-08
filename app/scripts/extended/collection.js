@@ -47,6 +47,15 @@ module.exports = Core.Collection = Backbone.Collection.extend({
     }
   },
 
+  fetch: function(options){
+    options = options && options.via && _.extend({
+      via: options.via,
+      url: this.url(options.via)
+    }, options);
+
+    return  Backbone.Collection.prototype.fetch.call(this, options);
+  },
+
   fetch_once: function(){
     if(this.loaded){return this.loaded;}
     var promise = this.fetch.apply(this, arguments);
