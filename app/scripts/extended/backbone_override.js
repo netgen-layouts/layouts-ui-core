@@ -46,6 +46,9 @@ var Backbone = require('backbone');
 
 
   Backbone.sync = function(method, what, options){
+    options || (options = {});
+    options.via && !options.url && (options.url = what.url(options.via));
+
     var collection = what.collection,
         via = options.via || method;
 

@@ -3,6 +3,7 @@
 var Core = require('core');
 var _ = require('underscore');
 var Backbone = require('backbone');
+var utils = require('./utils');
 
 module.exports = Core.Model = Backbone.Model.extend({
 
@@ -63,13 +64,11 @@ module.exports = Core.Model = Backbone.Model.extend({
     return Backbone.Model.prototype.set.call(this, attrs, options);
   },
 
-  fetch: function(options){
-    options = options && options.via && _.extend({
-      via: options.via,
-      url: this.url(options.via)
-    }, options);
-    return  Backbone.Model.prototype.fetch.call(this, options);
-  },
+  // fetch: function(options){
+  //   options || (options = {});
+  //   options.via && !options.url && (options.url = this.url(options.via));
+  //   return  Backbone.Model.prototype.fetch.call(this, options);
+  // },
 
   fetch_once: function(){
     console.log("fetch_once loaded", this.loaded);
@@ -79,24 +78,42 @@ module.exports = Core.Model = Backbone.Model.extend({
     return promise;
   },
 
-  urlRoot: function(){
+  urlRoot: function(path, opts){
+    opts || (opts = {});
+    path || (path = _.result(this, 'path'));
+    !opts.custom_path && (path += '(/:id)(/:additional)');
     if(this.content_browser){
-      return Core.env.cb_base_url + _.result(this, 'path');
+      return Core.env.cb_base_url + path;
     }else{
-      return Core.env.base_url + _.result(this, 'path');
+      return Core.env.base_url + path;
     }
   },
 
-  url: function(additional){
-    additional  = additional ? additional : '';
-    var url = Backbone.Model.prototype.url.apply(this, arguments);
-    return this.url_format(url, additional);
+
+  url: function(url_name, params){
+    var path = this.paths && this.paths[url_name],
+        url;
+
+    if(path){
+      url = this.urlRoot(path, {custom_path: true})
+      return this.generate_url(url, params);
+    }else{
+      url = this.urlRoot();
+      return this.generate_url(url, _.extend({additional: url_name}, params));
+    }
   },
 
-  url_format: function(url, additional){
-    additional  = additional ? '/' + additional : '';
-    return this.format ? url + additional + '.'+ this.format : url + additional;
+  generate_url: function(url, params){
+    url = utils.interpolate(url, _.extend({}, this.attributes, {id: this.attributes && this.get(this.idAttribute) }, params));
+    url = utils.clean_route(url);
+    return url;
   },
+
+
+  path_params: function(){
+    return {}
+  },
+
 
   set_if_empty: function(key, value){
     return !this.has(key) && this.set(key, value);

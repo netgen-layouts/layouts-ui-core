@@ -33,9 +33,8 @@ module.exports = Core.Collection = Backbone.Collection.extend({
     return new this.constructor(items);
   },
 
-  url: function(additional){
-    var url = this.model.prototype.urlRoot();
-    return this.model.prototype.url_format(url, additional);
+  url: function(name, params){
+    return this.model.prototype.url(name, params);
   },
 
   parse: function(resp){
@@ -47,14 +46,16 @@ module.exports = Core.Collection = Backbone.Collection.extend({
     }
   },
 
-  fetch: function(options){
-    options = options && options.via && _.extend({
-      via: options.via,
-      url: this.url(options.via)
-    }, options);
+  // fetch: function(options){
+  //   console.log(options);
+  //   options && options.via && _.extend(options, {
+  //     via: options.via,
+  //     url: this.url(options.via)
+  //   });
 
-    return  Backbone.Collection.prototype.fetch.call(this, options);
-  },
+
+  //   return  Backbone.Collection.prototype.fetch.call(this, options);
+  // },
 
   fetch_once: function(){
     if(this.loaded){return this.loaded;}
@@ -93,8 +94,8 @@ module.exports = Core.Collection = Backbone.Collection.extend({
       _.each(this.indexes, function(keys){
         index_name = keys.join('_');
         this.index[index_name] = this.index[index_name] || {};
-        compiled = _.map(keys, function(attr){
-          return item.get(attr);
+        compiled = _.map(keys, function(attr)
+{          return item.get(attr);
         }).join(',');
         this.index[index_name][compiled] = this.index[index_name][compiled] || [];
         this.index[index_name][compiled].push(item);
