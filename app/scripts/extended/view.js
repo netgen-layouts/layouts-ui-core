@@ -25,7 +25,12 @@ module.exports = Core.View = Backbone.View.extend({
     this.yield_el = '[data-yield="'+this.cid+'"]';
 
     this.$el.data('_view', this);
-    this.$el.attr('data-view', '');
+
+    var what = this.model || this.collection;
+    var attrs = {'data-view': ''}
+    what && (attrs['data-cid'] = what.cid);
+    this.$el.attr(attrs);
+
 
     this.default_query = options.default_query || {};
     this.listen_to_filter = options.listen_to_filter || this.listen_to_filter;
