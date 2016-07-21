@@ -12,7 +12,8 @@ var Core = {
   env: Env,
   _: _,
   Backbone: Backbone,
-  g: {}
+  g: {},
+  default_context: function(){}
 };
 
 _.extend(Core, Backbone.Events);

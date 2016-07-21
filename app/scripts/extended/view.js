@@ -253,7 +253,8 @@ module.exports = Core.View = Backbone.View.extend({
       params: Core.router && Core.router.params,
       model: this.model,
       collection: this.collection
-    }, this.context);
+    }, this.context, Core.default_context());
+
     this.set_context();
 
     this.$el.html(this.template ? this.render_template() : this.context.body);

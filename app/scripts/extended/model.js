@@ -64,6 +64,13 @@ module.exports = Core.Model = Backbone.Model.extend({
     return Backbone.Model.prototype.set.call(this, attrs, options);
   },
 
+
+  toggle: function(attr){
+    var value = this.get(attr);
+    this.set(attr, !value);
+    return value;
+  },
+
   // fetch: function(options){
   //   options || (options = {});
   //   options.via && !options.url && (options.url = this.url(options.via));
