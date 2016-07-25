@@ -47,8 +47,8 @@
 
 
   Pager.prototype.render = function() {
-    var inner_window = 3;
-    var outer_window = 1;
+    var inner_window = 2;
+    var outer_window = 0;
     var current_page = this.current_page;
     var total_pages = this.total_pages;
 
