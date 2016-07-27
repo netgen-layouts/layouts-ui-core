@@ -192,6 +192,11 @@ var Backbone = require('backbone');
   };
 
 
+  Backbone.Router.prototype.navigate_to_params = function(params, options){
+    return this.navigate_to(this.route_name, _.extend({}, this.params, params), options);
+  };
+
+
   //Copy events
   var original_extend  = Backbone.View.extend;
   Backbone.View.extend = function(child) {
