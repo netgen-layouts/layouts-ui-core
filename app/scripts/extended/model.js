@@ -107,9 +107,9 @@ module.exports = Core.Model = Backbone.Model.extend({
     path || (path = _.result(this, 'path'));
     !opts.custom_path && (path += '(/:id)(/:additional)');
     if(this.content_browser){
-      return Core.env.cb_base_url + path;
+      return Core.env.cb_api_url(path);
     }else{
-      return Core.env.base_url + path;
+      return Core.env.bm_api_url(path);
     }
   },
 

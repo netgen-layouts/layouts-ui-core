@@ -1,7 +1,26 @@
 'use strict';
 
+
+function normalize_path(path) {
+  return path.replace(/\/+/g, '/');
+}
+
 module.exports =  {
   name: 'development',
-  base_url: '/bm/api/v1/',
-  cb_base_url: '/cb/api/v1/'
+
+  bm_base_path: '/bm',
+  cb_base_path: '/cb',
+
+  bm_api_url: function(path) {
+    return normalize_path(this.bm_base_path + '/api/v1/' + path);
+  },
+
+  bm_app_url: function(path) {
+    return normalize_path(this.bm_base_path + '/app/'+path);
+  },
+
+  cb_api_url: function(path) {
+    return normalize_path(this.cb_base_path + '/api/v1/'+path);
+  }
+
 };
