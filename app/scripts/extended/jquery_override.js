@@ -62,13 +62,19 @@ $.fn.closest_view = function () {
 };
 
 
-$.fn.browser_tabs = function () {
+$.fn.browser_tabs = function (options) {
+  options || (options = {});
   var $this = $(this),
       $control = $this.children('ul');
 
-  $control.find('li:first').addClass('active');
   $this.find('.tab-pane').hide();
-  $this.find('.tab-pane:first').show();
+  if (options.active_tab){
+    $control.find('#' + options.active_tab).closest('li').addClass('active');
+    $this.find('#' + options.active_tab + '-tab').show();
+  } else {
+    $control.find('li:first').addClass('active');
+    $this.find('.tab-pane:first').show();
+  }
 
   $control.find('li a').click(function(e){
     e.preventDefault();
