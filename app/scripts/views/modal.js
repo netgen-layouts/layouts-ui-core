@@ -5,7 +5,7 @@ require('bootstrap'); // we need this for modal
 var View = require('../extended/view');
 
 module.exports = Core.Modal = View.extend({
-  extend_with: ['modal_options'],
+  extend_with: ['modal_options', '$dom_el'],
 
   template: 'modal',
 
@@ -26,6 +26,7 @@ module.exports = Core.Modal = View.extend({
     var self = this;
     this.$el.attr('tabindex', -1);
     this.$el.on('hidden.bs.modal', function(){
+      self.trigger('before_close');
       self.remove();
       self.trigger('close');
     });
@@ -39,7 +40,9 @@ module.exports = Core.Modal = View.extend({
 
   open: function(){
     if(this.is_open){ return this; }
-    this.render().insert().$el.modal(this.modal_options);
+    this.render();
+    this.$dom_el && this.$('.modal-body').append(this.$dom_el);
+    this.insert().$el.modal(this.modal_options);
     this.trigger('open');
     this.is_open = true;
     return this;
