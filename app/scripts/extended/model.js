@@ -1,6 +1,6 @@
 'use strict';
 
-var Core = require('core');
+var Core = require('../core_base');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var utils = require('./utils');

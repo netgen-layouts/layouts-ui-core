@@ -27,6 +27,9 @@ JavaScriptCompiler.prototype.nameLookup = function(parent, name /* , type*/ ) {
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+
+var VENDOR_FILES = ['jquery', 'underscore', 'backbone', 'backbone.localstorage'];
+
 module.exports = function(grunt) {
   // load all grunt tasks
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -119,7 +122,7 @@ module.exports = function(grunt) {
         dest: '.tmp/scripts/vendor.js',
         options: {
           debug: true,
-          require: ['jquery', 'underscore', 'backbone']
+          require: VENDOR_FILES
         }
       },
 
@@ -128,14 +131,9 @@ module.exports = function(grunt) {
         dest: '.tmp/scripts/main.js',
         options: {
           debug: true,
-          external: ['jquery', 'underscore', 'backbone'],
+          external: VENDOR_FILES,
           browserifyOptions: {
             debug: true
-          },
-          alias: {
-            'core': './app/scripts/core.js',
-            'core_boot': './app/scripts/core_boot.js',
-            'core_pager': './app/scripts/components/pager.js'
           }
         }
       },
@@ -144,17 +142,20 @@ module.exports = function(grunt) {
         src: ['<%= yeoman.app %>/scripts/main.js'],
         dest: '<%= yeoman.dist %>/scripts/main.js',
         options: {
-          external: ['jquery', 'underscore', 'backbone'],
           alias: {
-            'core': './app/scripts/core.js',
-            'core_boot': './app/scripts/core_boot.js',
-            'core_pager': './app/scripts/components/pager.js'
           }
         }
       }
 
     },
 
+
+    concat: {
+      dist: {
+        src: ['.tmp/scripts/vendor.js', '.tmp/scripts/main.js'],
+        dest: '.tmp/out.js',
+      },
+    },
 
 
     concurrent: {

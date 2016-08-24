@@ -1,6 +1,6 @@
 'use strict';
 
-var Core = require('core_boot');
+var Core = require('./core');
 
 var Modal = require('./views/modal');
 new Modal({

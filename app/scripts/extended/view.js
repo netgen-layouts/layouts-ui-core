@@ -1,10 +1,11 @@
 'use strict';
 
-var Core = require('core');
+var Core = require('../core_base');
+var $ = Core.$;
 var _ = require('underscore');
 var Backbone = require('backbone');
 var params_parser = require('./params_parser');
-var Pager = require('core_pager');
+var Pager = require('../components/pager');
 
 module.exports = Core.View = Backbone.View.extend({
 

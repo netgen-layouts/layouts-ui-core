@@ -1,21 +1,11 @@
 'use strict';
 
-var Env = require('./environments/development');
-var JQuery = require('./extended/jquery_override');
-window.$ = window.jQuery = JQuery;
-var _ = require('underscore');
-var Backbone = require('./extended/backbone_override');
-
-Backbone.LocalStorage = require('backbone.localstorage');
-
-var Core = {
-  env: Env,
-  _: _,
-  Backbone: Backbone,
-  g: {},
-  default_context: function(){}
-};
-
-_.extend(Core, Backbone.Events);
+var Core = require('./core_base');
+require('./extended/model');
+require('./extended/view');
+require('./extended/collection');
+require('./views/modal');
+require('./views/form_modal');
+require('./templates_loader');
 
 module.exports = Core;

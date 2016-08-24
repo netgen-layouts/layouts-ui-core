@@ -1,6 +1,6 @@
 'use strict';
 
-//var Core = require('./core');
+var Core = require('./core_namespace');
 var _ = require('underscore');
 var Handlebars = require('handlebars');
 var TagHelper = require('./tag_helper');
@@ -13,7 +13,7 @@ var render_partial = function(template, context){
   return TagHelper.render_partial.call(this, template, context);
 };
 
-module.exports = {
+module.exports = Core.handlebars_helpers = {
 
   t: function(key){
     return Core.i18n.t(key);
@@ -213,10 +213,10 @@ module.exports = {
     };
 
     _.defer(function(){
-      $('#'+context.id).on('change', function(){
+      Core.$('#'+context.id).on('change', function(){
         var data  = {
           page: 1,
-          limit: $(this).val()
+          limit: Core.$(this).val()
         };
 
         if(view.name === 'search' && !view.collection.path.length){

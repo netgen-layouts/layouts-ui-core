@@ -1,7 +1,6 @@
 'use strict';
 
-var Core = require('core');
-require('bootstrap'); // we need this for modal
+var Core = require('../core_base');
 var View = require('../extended/view');
 
 module.exports = Core.Modal = View.extend({

@@ -2,6 +2,16 @@
 
 var $ = require('jquery');
 
+window.jQuery = $;
+require('bootstrap/js/transition');
+require('bootstrap/js/dropdown');
+require('bootstrap/js/modal');
+require('bootstrap/js/collapse');
+require('jquery-ui/sortable');
+
+jQuery.noConflict(true);
+
+
 $.fn.toJSON = function() {
   var hash = {};
   $.each(this.serializeArray(), function() {
