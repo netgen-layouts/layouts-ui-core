@@ -2,7 +2,9 @@
 
 var Core = require('./core');
 
-var Modal = require('./views/modal');
-new Modal({
-  title: 'Modal title'
-}).open();
+module.exports = Core;
+
+// var Modal = require('./views/modal');
+// new Modal({
+//   title: 'Modal title'
+// }).open();

@@ -115,6 +115,18 @@ module.exports = function(grunt) {
     },
 
 
+    uglify: {
+      dist: {
+        options: {
+          compress: {
+            drop_console: true
+          }
+        },
+        src: '<%= yeoman.dist %>/scripts/main.js',
+        dest: '<%= yeoman.dist %>/scripts/main.min.js'
+      }
+    },
+
     browserify: {
 
       vendor: {
@@ -142,7 +154,11 @@ module.exports = function(grunt) {
         src: ['<%= yeoman.app %>/scripts/main.js'],
         dest: '<%= yeoman.dist %>/scripts/main.js',
         options: {
+          browserifyOptions: {
+            debug: true
+          },
           alias: {
+            'core': './app/scripts/core'
           }
         }
       }
@@ -199,6 +215,7 @@ module.exports = function(grunt) {
       'clean:dist',
       'gitinfo',
       'concurrent:dist',
+      'uglify:dist'
     ]);
   });
 
