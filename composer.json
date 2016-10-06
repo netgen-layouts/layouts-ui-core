@@ -1,6 +1,6 @@
 {
-    "name": "netgen/core-ui-components",
-    "description": "Netgen Core UI Components",
+    "name": "netgen/core-ui-bundle",
+    "description": "Netgen Core UI JS framework",
     "authors": [
         {
             "name": "Netgen",
