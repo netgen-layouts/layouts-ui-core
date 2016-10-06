@@ -117,17 +117,7 @@ module.exports = function(grunt) {
     },
 
 
-    uglify: {
-      dist: {
-        options: {
-          compress: {
-            drop_console: true
-          }
-        },
-        src: '<%= config.dist %>/scripts/<%= pkg.name %>.js',
-        dest: '<%= config.dist %>/scripts/<%= pkg.name %>.min.js'
-      }
-    },
+
 
     browserify: {
 
@@ -154,8 +144,8 @@ module.exports = function(grunt) {
       },
 
       dist: {
-        src: ['<%= config.app %>/scripts/<%= pkg.name %>.js'],
-        dest: '<%= config.dist %>/scripts/<%= pkg.name %>.js',
+        src: ['<%= config.app %>/scripts/main.js'],
+        dest: '.tmp/scripts/main.js',
         options: {
           browserifyOptions: {
             debug: true
@@ -168,6 +158,18 @@ module.exports = function(grunt) {
 
     },
 
+
+    uglify: {
+      dist: {
+        options: {
+          compress: {
+            drop_console: true
+          }
+        },
+        src: '.tmp/scripts/main.js',
+        dest: '<%= config.dist %>/js/<%= pkg.name %>.js'
+      }
+    },
 
 
 
