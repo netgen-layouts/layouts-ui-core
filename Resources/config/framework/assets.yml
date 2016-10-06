@@ -1,0 +1,16 @@
+assets:
+    packages:
+        ngcore_css:
+            base_path: '/bundles/netgencoreui/css'
+            # version: '%ngcore.asset.version%'
+            version: ~
+            version_format: 'v%%2$s/%%1$s'
+        ngcore_js:
+            base_path: '/bundles/netgencoreui/js'
+            # version: '%ngcore.asset.version%'
+            version: ~
+            version_format: 'v%%2$s/%%1$s'
+        ngcore:
+            base_path: '/bundles/netgencoreui'
+            version: ~
+            version_format: ~
