@@ -146,6 +146,9 @@ module.exports = function(grunt) {
           external: VENDOR_FILES,
           browserifyOptions: {
             debug: true
+          },
+          alias: {
+           'core': './app/scripts/core'
           }
         }
       },

@@ -8,3 +8,4 @@ module.exports = Core;
 // new Modal({
 //   title: 'Modal title'
 // }).open();
+
