@@ -1,11 +1,14 @@
 'use strict';
 
-var Core = require('./core');
+var Core = require('./core_base');
+require('./extended/model');
+require('./extended/view');
+require('./extended/collection');
+require('./views/modal');
+require('./views/form_modal');
+require('./templates_loader');
+
+
 
 module.exports = Core;
-
-// var Modal = require('./views/modal');
-// new Modal({
-//   title: 'Modal title'
-// }).open();
 

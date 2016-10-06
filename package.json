@@ -1,7 +1,7 @@
 {
-  "name": "core",
-  "description": "Core module",
-  "main": "app/scripts/core.js",
+  "name": "netgen-core",
+  "description": "Netgen Core JS framework",
+  "main": "app/scripts/main.js",
   "version": "0.9.0",
   "devDependencies": {
     "autoprefixer": "^6.3.6",
@@ -29,6 +29,7 @@
     "inflection": "^1.8.0",
     "jquery": "^2.2.2",
     "underscore": "^1.8.3",
+    "handlebars": "^4.0.5",
     "jquery-ui": "1.10.5"
   }
 }

@@ -28,7 +28,6 @@ JavaScriptCompiler.prototype.nameLookup = function(parent, name /* , type*/ ) {
 // 'test/spec/**/*.js'
 
 
-var VENDOR_FILES = ['jquery', 'underscore', 'backbone', 'backbone.localstorage'];
 
 module.exports = function(grunt) {
   // load all grunt tasks
@@ -37,22 +36,25 @@ module.exports = function(grunt) {
   // configurable paths
   var config = {
     app: 'app',
-    dist: 'dist'
+    dist: 'Resources/public'
   };
 
+  var pkg = grunt.file.readJSON('package.json');
+
+  var VENDOR_FILES = Object.keys(pkg.dependencies);
 
   grunt.initConfig({
-    yeoman: config,
+    config: config,
     pkg: grunt.file.readJSON('package.json'),
 
 
     watch: {
       browserify: {
-        files: ['<%= yeoman.app %>/scripts/**/*.js'],
+        files: ['<%= config.app %>/scripts/**/*.js'],
         tasks: ['browserify:dev']
       },
       handlebars: {
-        files: ['<%= yeoman.app %>/templates/**/*.hbs', 'tests/templates/**/*.hbs'],
+        files: ['<%= config.app %>/templates/**/*.hbs', 'tests/templates/**/*.hbs'],
         tasks: ['handlebars']
       }
     },
@@ -77,8 +79,8 @@ module.exports = function(grunt) {
           dot: true,
           src: [
             '.tmp',
-            '<%= yeoman.dist %>/*',
-            '!<%= yeoman.dist %>/.git*'
+            '<%= config.dist %>/*',
+            '!<%= config.dist %>/.git*'
           ]
         }]
       },
@@ -90,7 +92,7 @@ module.exports = function(grunt) {
     handlebars: {
       compile: {
         files: {
-          '<%= yeoman.app %>/scripts/templates.js': '<%= yeoman.app %>/templates/**/*.hbs'
+          '<%= config.app %>/scripts/templates.js': '<%= config.app %>/templates/**/*.hbs'
         },
         options: {
           compilerOptions: {
@@ -122,8 +124,8 @@ module.exports = function(grunt) {
             drop_console: true
           }
         },
-        src: '<%= yeoman.dist %>/scripts/main.js',
-        dest: '<%= yeoman.dist %>/scripts/main.min.js'
+        src: '<%= config.dist %>/scripts/<%= pkg.name %>.js',
+        dest: '<%= config.dist %>/scripts/<%= pkg.name %>.min.js'
       }
     },
 
@@ -133,35 +135,33 @@ module.exports = function(grunt) {
         src: [],
         dest: '.tmp/scripts/vendor.js',
         options: {
-          debug: true,
           require: VENDOR_FILES
         }
       },
 
       dev: {
-        src: ['<%= yeoman.app %>/scripts/main.js'],
+        src: ['<%= config.app %>/scripts/main.js'],
         dest: '.tmp/scripts/main.js',
         options: {
-          debug: true,
           external: VENDOR_FILES,
           browserifyOptions: {
             debug: true
           },
           alias: {
-           'core': './app/scripts/core'
+           'netgen-core': './app/scripts/main'
           }
         }
       },
 
       dist: {
-        src: ['<%= yeoman.app %>/scripts/main.js'],
-        dest: '<%= yeoman.dist %>/scripts/main.js',
+        src: ['<%= config.app %>/scripts/<%= pkg.name %>.js'],
+        dest: '<%= config.dist %>/scripts/<%= pkg.name %>.js',
         options: {
           browserifyOptions: {
             debug: true
           },
           alias: {
-            'core': './app/scripts/core'
+            'netgen-core': './app/scripts/main'
           }
         }
       }
@@ -169,12 +169,6 @@ module.exports = function(grunt) {
     },
 
 
-    concat: {
-      dist: {
-        src: ['.tmp/scripts/vendor.js', '.tmp/scripts/main.js'],
-        dest: '.tmp/out.js',
-      },
-    },
 
 
     concurrent: {
