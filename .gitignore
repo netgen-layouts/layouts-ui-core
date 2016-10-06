@@ -11,3 +11,4 @@ coverage
 *.ruby-version
 releases
 onesky.json
+.php_cs.cache
