@@ -12,4 +12,4 @@ coverage
 releases
 onesky.json
 .php_cs.cache
-
+Resources/public/dev

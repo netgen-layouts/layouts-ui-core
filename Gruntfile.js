@@ -37,7 +37,8 @@ module.exports = function(grunt) {
   // configurable paths
   var config = {
     app: 'app',
-    dist: 'Resources/public'
+    dist: 'Resources/public',
+    dev: 'Resources/public/dev'
   };
 
   var pkg = grunt.file.readJSON('package.json');
@@ -63,13 +64,13 @@ module.exports = function(grunt) {
 
     browserSync: {
       bsFiles: {
-        src: ['.tmp/scripts/*', 'app/*html']
+        src: ['<%= config.dev %>/js/*', 'app/*html']
       },
       options: {
         open: false,
         watchTask: true,
         server: {
-          baseDir: ['.tmp', config.app]
+          baseDir: ['<%= config.dev %>', config.app]
         }
       }
     },
@@ -79,7 +80,7 @@ module.exports = function(grunt) {
         files: [{
           dot: true,
           src: [
-            '.tmp',
+            '<%= config.dev %>',
             '<%= config.dist %>/*',
             '!<%= config.dist %>/.git*'
           ]
@@ -89,7 +90,7 @@ module.exports = function(grunt) {
         '<%= config.dist %>/vendor/ace-editor',
         '<%= config.dist %>/vendor/alloy-editor'
       ],
-      server: '.tmp'
+      server: '<%= config.dev %>'
     },
 
 
@@ -150,7 +151,7 @@ module.exports = function(grunt) {
 
       vendor: {
         src: [],
-        dest: '.tmp/scripts/vendor.js',
+        dest: '<%= config.dev %>/js/vendor.js',
         options: {
           require: VENDOR_FILES
         }
@@ -158,7 +159,7 @@ module.exports = function(grunt) {
 
       dev: {
         src: ['<%= config.app %>/scripts/main.js'],
-        dest: '.tmp/scripts/main.js',
+        dest: '<%= config.dev %>/js/main.js',
         options: {
           external: VENDOR_FILES,
           browserifyOptions: {
@@ -173,7 +174,7 @@ module.exports = function(grunt) {
 
       dist: {
         src: ['<%= config.app %>/scripts/main.js'],
-        dest: '.tmp/scripts/main.js',
+        dest: '<%= config.dev %>/js/main.js',
         options: {
           browserifyOptions: {
             debug: true,
@@ -195,7 +196,7 @@ module.exports = function(grunt) {
             drop_console: true
           }
         },
-        src: '.tmp/scripts/main.js',
+        src: '<%= config.dev %>/js/main.js',
         dest: '<%= config.dist %>/js/<%= pkg.name %>.js'
       }
     },
