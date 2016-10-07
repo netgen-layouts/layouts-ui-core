@@ -8,6 +8,7 @@ require('bootstrap/js/dropdown');
 require('bootstrap/js/modal');
 require('bootstrap/js/collapse');
 require('jquery-ui/sortable');
+require('jquery_multientry');
 
 jQuery.noConflict(true);
 

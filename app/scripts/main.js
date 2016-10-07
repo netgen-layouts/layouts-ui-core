@@ -8,6 +8,5 @@ require('./views/modal');
 require('./views/form_modal');
 require('./templates_loader');
 
-
 module.exports = Core;
 
