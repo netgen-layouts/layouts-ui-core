@@ -1,6 +1,7 @@
 'use strict';
 
-var Core = require('./core_namespace');
+
+var Core = typeof window !== 'undefined' ? require('./core_base') : require('./core_namespace');
 var _ = require('underscore');
 var Handlebars = require('handlebars');
 var TagHelper = require('./tag_helper');

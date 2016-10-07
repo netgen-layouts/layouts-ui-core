@@ -82,6 +82,7 @@ module.exports = function(grunt) {
           src: [
             '<%= config.dev %>',
             '<%= config.dist %>/*',
+            '!<%= config.dist %>/vendor',
             '!<%= config.dist %>/.git*'
           ]
         }]
