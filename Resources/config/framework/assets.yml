@@ -10,6 +10,10 @@ assets:
             # version: '%ngcore.asset.version%'
             version: ~
             version_format: 'v%%2$s/%%1$s'
+        ngcore_vendor:
+            base_path: '/bundles/netgencoreui/vendor'
+            version: ~
+            version_format: ~
         ngcore:
             base_path: '/bundles/netgencoreui'
             version: ~
