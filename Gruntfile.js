@@ -164,25 +164,23 @@ module.exports = function(grunt) {
         options: {
           external: VENDOR_FILES,
           browserifyOptions: {
-            debug: true,
-            standalone: 'NetgenCore'
+            debug: true
           },
           alias: {
-           'netgen-core': './app/scripts/main'
+           'netgen-core': './app/scripts/core'
           }
         }
       },
 
       dist: {
         src: ['<%= config.app %>/scripts/main.js'],
-        dest: '<%= config.dev %>/js/main.js',
+        dest: '<%= config.dist %>/js/<%= pkg.name %>.js',
         options: {
           browserifyOptions: {
-            debug: true,
-            standalone: 'NetgenCore'
+            debug: true
           },
           alias: {
-            'netgen-core': './app/scripts/main'
+            'netgen-core': './app/scripts/core'
           }
         }
       }
@@ -197,7 +195,7 @@ module.exports = function(grunt) {
             drop_console: true
           }
         },
-        src: '<%= config.dev %>/js/main.js',
+        src: '<%= config.dist %>/js/<%= pkg.name %>.js',
         dest: '<%= config.dist %>/js/<%= pkg.name %>.js'
       }
     },
