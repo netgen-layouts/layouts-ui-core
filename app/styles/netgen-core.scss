@@ -19,3 +19,11 @@ body {
   color: #333;
   background-color: #fff;
 }
+
+.modal-open {
+  overflow: hidden;
+  .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}

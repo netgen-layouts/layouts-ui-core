@@ -26,10 +26,10 @@ module.exports = Core.Modal = View.extend({
     var self = this;
     this.$el.attr('tabindex', -1);
     this.$el.on('show.bs.modal', function(){
-      $(document.body).addClass('ngc');
+      //$(document.body).addClass('ngc');
     });
     this.$el.on('hidden.bs.modal', function(){
-      $(document.body).removeClass('ngc');
+      //$(document.body).removeClass('ngc');
       self.trigger('before_close');
       self.remove();
       self.trigger('close');
@@ -38,12 +38,12 @@ module.exports = Core.Modal = View.extend({
   },
 
   insert: function(){
-    // var $wrapper = $('.js-ngc-wrapper');
-    // if(!$wrapper.length){
-    //   $wrapper = $('<div class="ngc js-ngc-wrapper">');
-    // }
-    $(document.body).append(this.$el);
-    //$wrapper.append(this.$el);
+    var $wrapper = $('.js-ngc-wrapper');
+    if(!$wrapper.length){
+      $wrapper = $('<div class="ngc js-ngc-wrapper">');
+      $(document.body).append($wrapper);
+    }
+    $wrapper.append(this.$el);
     return this;
   },
 
