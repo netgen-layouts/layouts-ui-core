@@ -55,6 +55,10 @@ module.exports = function(grunt) {
         files: ['<%= config.app %>/scripts/**/*.js'],
         tasks: ['browserify:dev']
       },
+      sass: {
+        files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+        tasks: ['sass:server', 'postcss:server']
+      },
       handlebars: {
         files: ['<%= config.app %>/templates/**/*.hbs', 'tests/templates/**/*.hbs'],
         tasks: ['handlebars']
@@ -64,7 +68,7 @@ module.exports = function(grunt) {
 
     browserSync: {
       bsFiles: {
-        src: ['<%= config.dev %>/js/*', 'app/*html']
+        src: ['<%= config.dev %>/js/*', '<%= config.dev %>/styles/*.css', 'app/*html']
       },
       options: {
         open: false,
@@ -146,6 +150,57 @@ module.exports = function(grunt) {
     },
 
 
+    sass: {
+      options: {
+        includePaths: ['.']
+      },
+      server: {
+        options: {
+          sourceMap: true,
+          sourceMapEmbed: true,
+          sourceMapContents: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/styles',
+          src: ['*.{scss,sass}'],
+          dest: '<%= config.dev %>/styles',
+          ext: '.css'
+        }]
+      },
+      dist: {
+        options: {
+          sourceMap: false,
+          sourceMapEmbed: false,
+          sourceMapContents: false,
+          outputStyle: 'compressed'
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/styles',
+          src: ['*.{scss,sass}'],
+          dest: '<%= config.dist %>/css',
+          ext: '.css'
+        }]
+      }
+    },
+
+    postcss: {
+      options: {
+        map: true,
+        processors: [
+          require('autoprefixer')({browsers: 'last 3 versions'})
+        ]
+      },
+      server: {
+        src: '<%= config.dev %>/styles/*.css'
+      },
+
+      dist: {
+        src: '<%= config.dist %>/css/*.css'
+      }
+    },
+
 
 
     browserify: {
@@ -204,6 +259,7 @@ module.exports = function(grunt) {
 
     concurrent: {
       server: [
+        'sass:server',
         'handlebars',
         'browserify:dev',
         'browserify:vendor'
@@ -212,6 +268,7 @@ module.exports = function(grunt) {
       test: [],
 
       dist: [
+        'sass:dist',
         'handlebars',
         'browserify:dist',
         'copy:vendor'

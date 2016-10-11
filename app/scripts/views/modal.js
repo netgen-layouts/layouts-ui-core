@@ -2,6 +2,7 @@
 
 var Core = require('../core_base');
 var View = require('../extended/view');
+var $ = Core.$;
 
 module.exports = Core.Modal = View.extend({
   extend_with: ['modal_options', '$dom_el'],
@@ -24,7 +25,11 @@ module.exports = Core.Modal = View.extend({
     this.context.cancel_text = options.cancel_text || 'Cancel';
     var self = this;
     this.$el.attr('tabindex', -1);
+    this.$el.on('show.bs.modal', function(){
+      $(document.body).addClass('ngc');
+    });
     this.$el.on('hidden.bs.modal', function(){
+      $(document.body).removeClass('ngc');
       self.trigger('before_close');
       self.remove();
       self.trigger('close');
@@ -33,7 +38,12 @@ module.exports = Core.Modal = View.extend({
   },
 
   insert: function(){
-    this.$el.appendTo(document.body);
+    // var $wrapper = $('.js-ngc-wrapper');
+    // if(!$wrapper.length){
+    //   $wrapper = $('<div class="ngc js-ngc-wrapper">');
+    // }
+    $(document.body).append(this.$el);
+    //$wrapper.append(this.$el);
     return this;
   },
 
