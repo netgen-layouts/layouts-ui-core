@@ -303,12 +303,13 @@ module.exports = function(grunt) {
 
 
   grunt.registerTask('build', function() {
-    grunt.task.run([
-      'clean:dist',
-      'gitinfo',
-      'concurrent:dist',
-      'uglify:dist'
-    ]);
+    grunt.log.write('No build for you! Not for standalone usage.');
+    // grunt.task.run([
+    //   'clean:dist',
+    //   'gitinfo',
+    //   'concurrent:dist',
+    //   'uglify:dist'
+    // ]);
   });
 
 
