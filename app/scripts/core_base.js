@@ -1,6 +1,7 @@
 'use strict';
 
 var Core = require('./core_namespace');
+var utils = require('./extended/utils');
 
 var Env = require('./environments/development');
 var jQuery = require('./extended/jquery_override');
@@ -15,6 +16,7 @@ Backbone.LocalStorage = require('backbone.localstorage');
 
 var CoreExtend = {
   env: Env,
+  utils: utils,
   _: _,
   $: jQuery,
   Backbone: Backbone,

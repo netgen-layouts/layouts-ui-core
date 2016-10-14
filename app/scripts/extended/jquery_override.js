@@ -1,14 +1,14 @@
 'use strict';
 
 var $ = require('jquery');
-
-window.jQuery = $;
+window.ngc_jquery = window.jQuery = $;
 require('bootstrap/js/transition');
 require('bootstrap/js/dropdown');
 require('bootstrap/js/modal');
 require('bootstrap/js/collapse');
 require('jquery-ui/sortable');
 require('jquery_multientry');
+
 
 jQuery.noConflict(true);
 
