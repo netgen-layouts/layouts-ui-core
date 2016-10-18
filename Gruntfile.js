@@ -93,7 +93,7 @@ module.exports = function(grunt) {
       },
       vendor: [
         '<%= config.dist %>/vendor/ace-editor',
-        '<%= config.dist %>/vendor/alloy-editor'
+        '<%= config.dist %>/vendor/ckeditor'
       ],
       server: '<%= config.dev %>'
     },
@@ -111,9 +111,9 @@ module.exports = function(grunt) {
           },
           {
             expand: true,
-            cwd: 'node_modules/alloyeditor/dist/alloy-editor',
+            cwd: 'node_modules/ckeditor',
             src: '**',
-            dest: '<%= config.dist %>/vendor/alloy-editor'
+            dest: '<%= config.dist %>/vendor/ckeditor'
           }
         ]
       }
