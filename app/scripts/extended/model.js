@@ -95,7 +95,6 @@ module.exports = Core.Model = Backbone.Model.extend({
   // },
 
   fetch_once: function(){
-    console.log("fetch_once loaded", this.loaded);
     if(this.loaded){return this.loaded;}
     var promise = this.fetch.apply(this, arguments)
     this.loaded = promise;

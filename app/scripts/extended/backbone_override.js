@@ -174,6 +174,7 @@ var Backbone = require('backbone');
         if(!in_url && !(v === null || v === undefined)){ query_params[k] = v; }
       });
 
+      //FIXME: jQuery isn't loaded here
       !_.isEmpty(query_params) && (route += '?' + $.param(query_params));
     }
 
