@@ -12,5 +12,5 @@ coverage
 releases
 onesky.json
 .php_cs.cache
-Resources/public/dev
-Resources/public/vendor/*/package.json
+bundle/Resources/public/dev
+bundle/Resources/public/vendor/*/package.json

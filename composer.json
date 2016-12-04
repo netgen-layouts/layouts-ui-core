@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Netgen\\Bundle\\CoreUIBundle\\": ""
+            "Netgen\\Bundle\\CoreUIBundle\\": "bundle/"
         }
     },
     "extra": {
