@@ -26,11 +26,9 @@
     "node": ">=0.8.0"
   },
   "dependencies": {
-    "ace-builds": "^1.2.4",
     "backbone": "^1.3.2",
     "backbone.localstorage": "^1.1.16",
     "bootstrap": "^3.3.6",
-    "ckeditor": "^4.5.11",
     "handlebars": "^4.0.5",
     "inflection": "^1.8.0",
     "jquery": "^2.2.2",
@@ -38,7 +36,5 @@
     "jquery_multientry": "git+https://bitbucket.org/effectiva/jquery_multientry.git",
     "underscore": "^1.8.3"
   },
-  "scripts": {
-    "postinstall": "grunt npm_to_vendor"
-  }
+  "scripts": {}
 }

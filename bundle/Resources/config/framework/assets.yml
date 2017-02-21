@@ -1,9 +1,5 @@
 assets:
     packages:
-        ngcore_vendor:
-            base_path: '/bundles/netgencoreui/vendor'
-            version: ~
-            version_format: ~
         ngcore:
             base_path: '/bundles/netgencoreui'
             version: ~
