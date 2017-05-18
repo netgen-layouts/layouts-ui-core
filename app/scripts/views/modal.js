@@ -14,7 +14,8 @@ module.exports = Core.Modal = View.extend({
   events: {
     'click .action_apply':  '$apply',
     'click .action_cancel':  '$cancel',
-    'submit form': '$submit'
+    'submit form': '$submit',
+    'keydown': 'keyAction'
   },
 
   initialize: function(options){
@@ -82,6 +83,12 @@ module.exports = Core.Modal = View.extend({
     this.trigger('cancel');
     this.close();
     return this;
+  },
+
+  keyAction: function(e){
+    if(e.keyCode === 27){
+      this.trigger('cancel');
+    }
   }
 
 
