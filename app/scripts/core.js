@@ -5,6 +5,7 @@ require('./extended/model');
 require('./extended/view');
 require('./extended/collection');
 require('./views/modal');
+require('./views/modal_form');
 require('./views/form_modal');
 require('./templates_loader');
 
