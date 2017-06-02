@@ -15,9 +15,9 @@ module.exports = Core.ModalForm = Modal.extend({
 
   initialize: function(options){
     Modal.prototype.initialize.apply(this, arguments);
-    this.modal_options = {
+    this.modal_options = $.extend({
       backdrop: 'static'
-    };
+    }, options.modal_options);
 
     this.listenTo(Core.router, 'route', this.close);
 
