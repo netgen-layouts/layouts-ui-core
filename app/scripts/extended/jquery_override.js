@@ -158,14 +158,21 @@ $.fn.xeditable = function(){
 
 
 
-function dependable_select_detect(master_select){
+function dependable_select_detect(master_select, opts){
+  opts = $.extend({
+    animate: true,
+  }, opts || {});
+
+  var $this = $(master_select);
+  $this = $this.is('select') ? $this : $this.find('select:first');
+
   var
-    $this = $(master_select),
     val = $this.val(),
+    animate = opts.animate,
     $parent = $this.closest('.js-dependable-selects-group');
 
-    $parent.find('[data-linked-value]').hide();
-    $parent.find('[data-linked-value="'+val+'"]').show();
+    $parent.find('[data-linked-value]').hide(animate && 400);
+    $parent.find('[data-linked-value="'+val+'"]').show(animate && 400);
 }
 
 
@@ -176,7 +183,7 @@ $(document).on('change', '.js-dependable-selects-group .js-master', function(){
 
 $.fn.dependable_select = function(){
   $(this).each(function(){
-    dependable_select_detect(this);
+    dependable_select_detect(this, {animate: false});
   });
 };
 
