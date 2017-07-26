@@ -193,7 +193,8 @@ var Backbone = require('backbone');
 
 
   Backbone.Router.prototype.navigate_to_params = function(params, options){
-    return this.navigate_to(this.route_name, _.extend({}, this.params, params), options);
+    this.params = _.extend({}, this.params, params);
+    return this.navigate_to(this.route_name, this.params, options);
   };
 
 

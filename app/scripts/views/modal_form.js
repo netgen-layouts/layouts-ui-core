@@ -6,7 +6,7 @@ var _ = require('underscore');
 var Modal = require('./modal');
 
 module.exports = Core.ModalForm = Modal.extend({
-  extend_with: ['url'],
+  extend_with: ['url', 'on_success', 'on_error'],
 
   template: 'modal_form',
   ENTER_KEY: 13,
@@ -21,8 +21,14 @@ module.exports = Core.ModalForm = Modal.extend({
 
     this.listenTo(Core.router, 'route', this.close);
 
-    this.on('save:success', this.on_success);
-    this.on('save:error', this.on_error);
+    this.on('save:success', function(){
+      this.on_success.apply(this, arguments);
+    });
+
+    this.on('save:error', function(){
+      this.on_error.apply(this, arguments);
+    });
+
     this.on('apply', this.on_apply);
     return this;
   },
