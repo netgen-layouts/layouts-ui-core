@@ -146,6 +146,7 @@ $.fn.xeditable = function(){
     var $this = $(this),
         $form = $this.find('.form');
 
+    $this.attr('data-input', '');
 
     if($form.data('original_html')) {return;}
     var form_html = $form.html();

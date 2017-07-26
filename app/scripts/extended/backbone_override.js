@@ -174,8 +174,7 @@ var Backbone = require('backbone');
         if(!in_url && !(v === null || v === undefined)){ query_params[k] = v; }
       });
 
-      //FIXME: jQuery isn't loaded here
-      !_.isEmpty(query_params) && (route += '?' + $.param(query_params));
+      !_.isEmpty(query_params) && (route += '?' + Backbone.$.param(query_params));
     }
 
     route = route.replace(/\(|\)/g, '').replace(/\/\:\w+/g, '').replace(/\/null/, ''); // TODO: test this line
