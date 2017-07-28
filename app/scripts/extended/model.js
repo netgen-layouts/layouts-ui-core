@@ -127,7 +127,16 @@ module.exports = Core.Model = Backbone.Model.extend({
   },
 
   generate_url: function(url, params){
-    url = utils.interpolate(url, _.extend({}, this.attributes, {id: this.attributes && this.get(this.idAttribute) }, params));
+    var vars = url.match(/(:\w+)/g);
+    var attributes = {};
+    if(this.attributes){
+      _.each(vars, function(name) {
+        name = name.slice(1, name.length);
+        name && this.get(name) !== undefined && (attributes[name] = this.get(name));
+      }.bind(this));
+    }
+    var all_params = _.extend({}, attributes, params);
+    url = utils.interpolate(url, all_params);
     url = utils.clean_route(url);
     return url;
   },
