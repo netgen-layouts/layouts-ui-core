@@ -6,7 +6,7 @@ var _ = require('underscore');
 var Modal = require('./modal');
 
 module.exports = Core.ModalForm = Modal.extend({
-  extend_with: ['url', 'on_success', 'on_error'],
+  extend_with: ['url', 'via', 'on_success', 'on_error'],
 
   template: 'modal_form',
   ENTER_KEY: 13,
@@ -64,13 +64,16 @@ module.exports = Core.ModalForm = Modal.extend({
   },
 
   $submit: function(e){
+    var via = this.via || 'save';
     e.preventDefault();
     return this.$('form')
         .ajax_submit()
         .done(function(){
+          this.model.trigger.apply(this.model, [via+':success'].concat(_.toArray(arguments)) );
           this.trigger.apply(this, ['save:success'].concat(_.toArray(arguments)) );
         }.bind(this))
         .fail(function(){
+          this.model.trigger.apply(this.model, [via+':error'].concat(_.toArray(arguments)) );
           this.trigger.apply(this, ['save:error'].concat(_.toArray(arguments)) );
         }.bind(this))
   },
