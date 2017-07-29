@@ -40,17 +40,17 @@ module.exports = Core.Model = Backbone.Model.extend({
     }.bind(this))
   },
 
-  save_via_form: function(view_or_form, event_name, data){
+  save_via_form: function(view_or_form, event_name, set_options){
     event_name || (event_name = 'save');
     var events = event_name.split(/\s+/);
 
     var $form = view_or_form.jquery ? view_or_form : view_or_form.$('form');
     return $form.ajax_submit({format: this.get('format') })
       .done(function(response){
-        this.set(response).trigger_events(event_name, 'success', response);
+        this.set(response, set_options).trigger_events(event_name, 'success', response);
       }.bind(this))
       .fail(function(response){
-        this.set(response.responseJSON).trigger_events(event_name, 'error', response);
+        this.set(response.responseJSON, set_options).trigger_events(event_name, 'error', response);
       }.bind(this));
   },
 
