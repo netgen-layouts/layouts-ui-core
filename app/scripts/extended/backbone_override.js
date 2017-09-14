@@ -154,7 +154,7 @@ var Backbone = require('backbone');
     opts || (opts = {});
 
 
-    params.locale = params.locale || this.params.locale; //TODO: extract
+    params.locale = params.locale || this.params.locale || null; //TODO: extract
 
     this._inverted_routes || (this._inverted_routes = _.invert(this.routes));
 
