@@ -2,7 +2,7 @@
   "name": "netgen-core",
   "description": "Netgen Core JS framework",
   "main": "app/scripts/main.js",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "grunt": "~1.0.1",
