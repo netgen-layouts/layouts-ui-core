@@ -262,8 +262,8 @@ module.exports = Core.handlebars_helpers = {
     }
   },
 
-  uid: function(regenerate){
-    regenerate && (this._last_uid = _.uniqueId('uid_'));
+  uid: function(regenerate, options){
+    options && regenerate && (this._last_uid = _.uniqueId('uid_'));
     return this._last_uid;
   },
 
