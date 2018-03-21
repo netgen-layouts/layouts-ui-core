@@ -14,3 +14,4 @@ onesky.json
 .php_cs.cache
 bundle/Resources/public/dev
 bundle/Resources/public/vendor/*/package.json
+package-lock.json
