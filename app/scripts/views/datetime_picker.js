@@ -41,12 +41,12 @@ module.exports = Core.DateTimePicker = View.extend({
     options || (options = {});
 
     this.$dateEl = this.$('.datetime');
-    this.$dateFormated = this.$('.datetime-formatted');
+    this.$dateFormatted = this.$('.datetime-formatted');
 
     this.$dateEl.datetimepicker($.extend({}, this.defaultOptions, this.options));
     this.datePicker = this.$dateEl.data('DateTimePicker');
 
-    this.$dateFormated.val() && this.setPluginDate(this.$dateFormated.val());
+    this.$dateFormatted.val() && this.setPluginDate(this.$dateFormatted.val());
     this.toggleClearBtn();
 
     return this;
@@ -64,7 +64,7 @@ module.exports = Core.DateTimePicker = View.extend({
 
   dateTimeChange: function(){
     this.value = this.datePicker.date() ? moment(this.datePicker.date()).format('Y-MM-DDTHH:mm') : '';
-    this.$dateFormated.val(this.value);
+    this.$dateFormatted.val(this.value);
     this.toggleClearBtn();
     this.trigger('change');
   },
