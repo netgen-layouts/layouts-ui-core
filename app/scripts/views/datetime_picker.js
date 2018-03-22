@@ -20,7 +20,6 @@ module.exports = Core.DateTimePicker = View.extend({
 
   defaultOptions: {
     sideBySide: true,
-    // format: 'Y-MM-DDTHH:mm',
     allowInputToggle: true,
     locale: languages,
     format: 'llll',
@@ -64,9 +63,10 @@ module.exports = Core.DateTimePicker = View.extend({
   },
 
   dateTimeChange: function(){
-    const newFormatedDate = this.datePicker.date() ? moment(this.datePicker.date()).format('Y-MM-DDTHH:mm') : '';
-    this.$dateFormated.val(newFormatedDate);
+    this.value = this.datePicker.date() ? moment(this.datePicker.date()).format('Y-MM-DDTHH:mm') : '';
+    this.$dateFormated.val(this.value);
     this.toggleClearBtn();
+    this.trigger('change');
   },
 
   toggleClearBtn: function(){
