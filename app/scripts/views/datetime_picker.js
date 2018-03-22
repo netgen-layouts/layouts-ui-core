@@ -41,7 +41,7 @@ module.exports = Core.DateTimePicker = View.extend({
     options || (options = {});
 
     this.$dateEl = this.$('.datetime');
-    this.$dateFormated = this.$('.datetime-formated');
+    this.$dateFormated = this.$('.datetime-formatted');
 
     this.$dateEl.datetimepicker($.extend({}, this.defaultOptions, this.options));
     this.datePicker = this.$dateEl.data('DateTimePicker');
