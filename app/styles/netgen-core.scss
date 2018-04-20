@@ -6,6 +6,7 @@ $namespace: '.ngc';
   @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
   @import "datetime_picker";
 }
+@import "snackbar";
 
 html {
   font-family: sans-serif; // 1
