@@ -1,6 +1,7 @@
 {
     "name": "netgen/core-ui",
     "description": "Netgen Core UI JS framework",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Netgen",
