@@ -64,10 +64,15 @@ module.exports = Core.ModalForm = Modal.extend({
   },
 
   $submit: function(e){
+    var self = this;
     var via = this.via || 'save';
     e.preventDefault();
     return this.$('form')
-        .ajax_submit()
+        .ajax_submit({
+          beforeSend: function(){
+            self.model.trigger.apply(self.model, [via+':beforeSend'].concat(_.toArray(arguments)) );
+          }
+        })
         .done(function(){
           this.model.trigger.apply(this.model, [via+':success'].concat(_.toArray(arguments)) );
           this.trigger.apply(this, ['save:success'].concat(_.toArray(arguments)) );

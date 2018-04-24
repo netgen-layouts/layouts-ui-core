@@ -64,7 +64,8 @@ $.fn.ajax_submit = function (opts) {
   return $.ajax({
     url: $this.attr('action'),
     method: $this.attr('method'),
-    data: $this.serialize()
+    data: $this.serialize(),
+    beforeSend: opts.beforeSend,
   });
 };
 
