@@ -39,6 +39,8 @@ module.exports = Core.ModalForm = Modal.extend({
   },
 
   on_success: function(resp){
+    var via = this.via || 'save';
+    this.model.trigger.apply(this.model, [via+':start'].concat(_.toArray(arguments)) );
     this.close();
     this.model.fetch();
   },
