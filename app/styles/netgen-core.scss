@@ -3,7 +3,7 @@ $namespace: '.ngc';
 
 //TODO: html, body
 #{$namespace}{
-  @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+  @import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
   @import "datetime_picker";
 }
 @import "snackbar";

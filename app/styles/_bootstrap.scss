@@ -1,6 +1,6 @@
 // Core variables and mixins
 
-$bootstrap: '../../bower_components/bootstrap-sass/assets/stylesheets';
+$bootstrap: '../../node_modules/bootstrap-sass/assets/stylesheets';
 
 @import "#{$bootstrap}/variables";
 @import "#{$bootstrap}/mixins";

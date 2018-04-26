@@ -43,7 +43,9 @@ module.exports = function(grunt) {
 
   var pkg = grunt.file.readJSON('package.json');
 
-  var VENDOR_FILES = _.without(Object.keys(pkg.dependencies), 'ace-builds', 'alloyeditor');
+  // We don't want to include bootstrap-sass assets since we handpick Bootstrap
+  // components from the main "bootstrap" package
+  var VENDOR_FILES = _.without(Object.keys(pkg.dependencies), 'bootstrap-sass');
 
   grunt.initConfig({
     config: config,
