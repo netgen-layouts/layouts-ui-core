@@ -1,7 +1,6 @@
-// Generated on 2013-07-23 using generator-webapp 0.2.6
 'use strict';
 
-/* OVERRIDE HANDLEBARS DEFAULT NAME LOOKUP ========================================================================================================*/
+// Override Handlebars default name lookup
 var Handlebars = require('handlebars/lib/index');
 var JavaScriptCompiler = Handlebars.JavaScriptCompiler;
 var _ = require('underscore');
@@ -12,29 +11,15 @@ var known_helpers = {};
 for (var k in helpers) {
   known_helpers[k] = true;
 }
-//console.log("KNOWN HELPERS", known_helpers);
-
 
 JavaScriptCompiler.prototype.nameLookup = function(parent, name /* , type*/ ) {
   return "Handlebars.r(" + parent + ",'" + name + "')";
 };
 
-/* OVERRIDE HANDLEBARS DEFAULT NAME LOOKUP ========================================================================================================*/
-
-
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// use this if you want to recursively match all subfolders:
-// 'test/spec/**/*.js'
-
-
-
 module.exports = function(grunt) {
   // load all grunt tasks
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  // configurable paths
   var config = {
     app: 'app',
     dist: 'bundle/Resources/public',
@@ -51,7 +36,6 @@ module.exports = function(grunt) {
     config: config,
     pkg: grunt.file.readJSON('package.json'),
 
-
     watch: {
       browserify: {
         files: ['<%= config.app %>/scripts/**/*.js'],
@@ -66,7 +50,6 @@ module.exports = function(grunt) {
         tasks: ['handlebars']
       }
     },
-
 
     browserSync: {
       bsFiles: {
@@ -114,7 +97,6 @@ module.exports = function(grunt) {
               .replace(/_(\w+)\.hbs$/, '$1');
           },
           processName: function(filename) {
-            // funky name processing here
             return filename
               .replace(/^app\/templates\//, '')
               .replace(/\.hbs$/, '');
@@ -122,7 +104,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
 
     sass: {
       options: {
@@ -175,10 +156,7 @@ module.exports = function(grunt) {
       }
     },
 
-
-
     browserify: {
-
       vendor: {
         src: [],
         dest: '<%= config.dev %>/js/vendor.js',
@@ -199,37 +177,8 @@ module.exports = function(grunt) {
            '@netgen/layouts-core-ui': './app/scripts/core'
           }
         }
-      },
-
-      dist: {
-        src: ['<%= config.app %>/scripts/main.js'],
-        dest: '<%= config.dist %>/js/netgen-core.js',
-        options: {
-          browserifyOptions: {
-            debug: true
-          },
-          alias: {
-            '@netgen/layouts-core-ui': './app/scripts/core'
-          }
-        }
-      }
-
-    },
-
-
-    uglify: {
-      dist: {
-        options: {
-          compress: {
-            drop_console: true
-          }
-        },
-        src: '<%= config.dist %>/js/netgen-core.js',
-        dest: '<%= config.dist %>/js/netgen-core.js'
       }
     },
-
-
 
     concurrent: {
       server: [
@@ -237,23 +186,11 @@ module.exports = function(grunt) {
         'handlebars',
         'browserify:dev',
         'browserify:vendor'
-      ],
-
-      test: [],
-
-      dist: [
-        'sass:dist',
-        'handlebars',
-        'browserify:dist'
       ]
     }
-
-
-
   });
 
   grunt.registerTask('server', function() {
-
     grunt.task.run([
       'fast_build',
       'browserSync',
@@ -270,18 +207,10 @@ module.exports = function(grunt) {
 
 
   grunt.registerTask('build', function() {
-    grunt.log.write('No build for you! Not for standalone usage.');
-    // grunt.task.run([
-    //   'clean:dist',
-    //   'gitinfo',
-    //   'concurrent:dist',
-    //   'uglify:dist'
-    // ]);
+    grunt.log.write('Not for standalone usage. Use the default grunt task.');
   });
-
 
   grunt.registerTask('default', [
     'server'
   ]);
-
 };
