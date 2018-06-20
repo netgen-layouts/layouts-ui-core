@@ -196,20 +196,20 @@ module.exports = function(grunt) {
             debug: true
           },
           alias: {
-           'netgen-core': './app/scripts/core'
+           '@netgen/layouts-core-ui': './app/scripts/core'
           }
         }
       },
 
       dist: {
         src: ['<%= config.app %>/scripts/main.js'],
-        dest: '<%= config.dist %>/js/<%= pkg.name %>.js',
+        dest: '<%= config.dist %>/js/netgen-core.js',
         options: {
           browserifyOptions: {
             debug: true
           },
           alias: {
-            'netgen-core': './app/scripts/core'
+            '@netgen/layouts-core-ui': './app/scripts/core'
           }
         }
       }
@@ -224,8 +224,8 @@ module.exports = function(grunt) {
             drop_console: true
           }
         },
-        src: '<%= config.dist %>/js/<%= pkg.name %>.js',
-        dest: '<%= config.dist %>/js/<%= pkg.name %>.js'
+        src: '<%= config.dist %>/js/netgen-core.js',
+        dest: '<%= config.dist %>/js/netgen-core.js'
       }
     },
 

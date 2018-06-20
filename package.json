@@ -1,6 +1,6 @@
 {
-  "name": "netgen-core",
-  "description": "Netgen Core JS framework",
+  "name": "@netgen/layouts-core-ui",
+  "description": "Netgen Layouts core JS framework",
   "version": "0.12.0",
   "main": "app/scripts/main.js",
   "devDependencies": {
