@@ -13,7 +13,7 @@
     "inflection": "^1.8.0",
     "jquery": "^2.2.2",
     "jquery-ui": "1.10.5",
-    "jquery_multientry": "git+https://bitbucket.org/effectiva/jquery_multientry.git",
+    "jquery_multientry": "bitbucket:effectiva/jquery_multientry#semver:^1.0.2",
     "underscore": "^1.8.3"
   }
 }
