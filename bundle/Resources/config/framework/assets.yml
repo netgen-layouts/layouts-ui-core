@@ -1,6 +1,0 @@
-assets:
-    packages:
-        ngcore:
-            base_path: '/bundles/netgencoreui'
-            version: '%ngcore.asset.version%'
-            version_format: '%%s?%%s'

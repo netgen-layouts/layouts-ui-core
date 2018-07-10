@@ -1,11 +1,8 @@
 .tmp/
 .sass-cache/
 node_modules/
-**/Resources/public/dev/
-.php_cs.cache
 app/scripts/templates.js
 package-lock.json
 yarn.lock
 yarn-error.log
 *.sublime-workspace
-**/Resources/public/vendor/*/package.json

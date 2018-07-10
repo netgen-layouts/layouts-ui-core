@@ -12,11 +12,6 @@
             "homepage": "http://effectiva.hr"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "Netgen\\Bundle\\CoreUIBundle\\": "bundle/"
-        }
-    },
     "extra": {
         "branch-alias": {
             "dev-master": "0.12.x-dev"
