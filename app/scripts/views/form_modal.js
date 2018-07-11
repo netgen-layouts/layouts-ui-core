@@ -1,7 +1,6 @@
 'use strict';
 
 var Core = require('../core_base');
-//var Inflection = require('inflection');
 var Modal = require('./modal');
 
 module.exports = Core.FormModal = Modal.extend({
@@ -39,11 +38,6 @@ module.exports = Core.FormModal = Modal.extend({
     }
 
   },
-
-  // get_form_namespace: function(){
-  //   var kind = this.model.template().get('kind');
-  //   return kind === 'Custom' ? Inflection.singularize(this.model.get('endpoint')) : Inflection.underscore(kind);
-  // },
 
   $apply: function () {
     this.$submit.apply(this, arguments);

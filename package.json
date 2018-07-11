@@ -10,7 +10,6 @@
     "bootstrap-sass": "^3.3.7",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "handlebars": "^4.0.11",
-    "inflection": "^1.12.0",
     "jquery": "^2.2.4",
     "jquery-ui": "~1.10.5",
     "jquery_multientry": "bitbucket:effectiva/jquery_multientry#semver:^1.0.2",
