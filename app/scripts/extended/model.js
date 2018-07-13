@@ -6,6 +6,7 @@ var Backbone = require('backbone');
 var utils = require('./utils');
 
 module.exports = Core.Model = Backbone.Model.extend({
+  api_url: Core.env.bm_api_url,
 
   get: function(attr) {
     // Call the getter if available
@@ -105,11 +106,7 @@ module.exports = Core.Model = Backbone.Model.extend({
     opts || (opts = {});
     path || (path = _.result(this, 'path'));
     !opts.custom_path && (path += '(/:id)(/:additional)');
-    if(this.content_browser){
-      return Core.env.cb_api_url(path);
-    }else{
-      return Core.env.bm_api_url(path);
-    }
+    return this.api_url(path);
   },
 
 
