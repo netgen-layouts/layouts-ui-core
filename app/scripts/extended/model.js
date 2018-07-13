@@ -6,7 +6,10 @@ var Backbone = require('backbone');
 var utils = require('./utils');
 
 module.exports = Core.Model = Backbone.Model.extend({
-  api_url: Core.env.bm_api_url,
+  // Default implementation, to be overriden by specific models
+  api_url: function(path) {
+    return path;
+  },
 
   get: function(attr) {
     // Call the getter if available
