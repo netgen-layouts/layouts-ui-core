@@ -1,7 +1,6 @@
 .tmp/
 .sass-cache/
 node_modules/
-app/scripts/templates.js
 package-lock.json
 yarn.lock
 yarn-error.log
