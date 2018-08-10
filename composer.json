@@ -1,6 +1,6 @@
 {
-    "name": "netgen/core-ui",
-    "description": "Netgen Core UI JS framework",
+    "name": "netgen/layouts-core-ui",
+    "description": "Netgen Layouts user interface core framework",
     "license": "proprietary",
     "authors": [
         {
