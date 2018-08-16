@@ -1,6 +1,7 @@
 {
   "name": "@netgen/layouts-ui-core",
   "description": "Netgen Layouts user interface core framework",
+  "license": "GPL-2.0-or-later",
   "version": "0.12.0",
   "main": "app/scripts/main.js",
   "devDependencies": {
