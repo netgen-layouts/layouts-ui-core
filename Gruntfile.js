@@ -62,12 +62,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask('server', function() {
     grunt.task.run([
-      'fast_build',
+      'build',
       'watch'
     ]);
   });
 
-  grunt.registerTask('fast_build', function() {
+  grunt.registerTask('build', function() {
     grunt.task.run([
       'handlebars'
     ]);
