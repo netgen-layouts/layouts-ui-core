@@ -1,5 +1,5 @@
 {
-  "name": "@netgen/layouts-core-ui",
+  "name": "@netgen/layouts-ui-core",
   "description": "Netgen Layouts core JS framework",
   "version": "0.12.0",
   "main": "app/scripts/main.js",
