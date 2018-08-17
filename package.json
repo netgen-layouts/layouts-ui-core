@@ -3,6 +3,10 @@
   "description": "Netgen Layouts user interface core framework",
   "license": "GPL-2.0-or-later",
   "version": "0.12.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/netgen-layouts/layouts-ui-core.git"
+  },
   "main": "app/scripts/main.js",
   "devDependencies": {
     "autoprefixer": "^8.6.5",
