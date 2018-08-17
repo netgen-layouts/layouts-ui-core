@@ -1,13 +1,3 @@
-//TODO: namespace, defaults variable maybe
-$namespace: '.ngc';
-
-//TODO: html, body
-#{$namespace}{
-  @import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
-  @import "datetime_picker";
-}
-@import "snackbar";
-
 html {
   font-family: sans-serif; // 1
   -ms-text-size-adjust: 100%; // 2
