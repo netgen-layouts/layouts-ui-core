@@ -6,7 +6,7 @@ var Backbone = require('backbone');
 var utils = require('./utils');
 
 module.exports = Core.Model = Backbone.Model.extend({
-  // Default implementation, to be overriden by specific models
+  // Default implementation, to be overridden by specific models
   api_url: function(path) {
     return path;
   },
