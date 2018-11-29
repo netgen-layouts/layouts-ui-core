@@ -1,7 +1,7 @@
 {
     "name": "netgen/layouts-ui-core",
     "description": "Netgen Layouts user interface core framework",
-    "license": "GPL-2.0-or-later",
+    "license": "MIT",
     "authors": [
         {
             "name": "Netgen",
