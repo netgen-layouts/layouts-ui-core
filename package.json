@@ -1,8 +1,7 @@
 {
   "name": "@netgen/layouts-ui-core",
   "description": "Netgen Layouts user interface core framework",
-  "license": "GPL-2.0-or-later",
-  "version": "0.12.0",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/netgen-layouts/layouts-ui-core.git"
