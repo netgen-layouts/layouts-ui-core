@@ -9,7 +9,6 @@ require('bootstrap/js/collapse');
 require('jquery-ui/sortable');
 require('jquery-ui/draggable');
 require('jquery-ui/droppable');
-require('jquery_multientry');
 
 
 jQuery.noConflict(true);
