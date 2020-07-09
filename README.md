@@ -1,4 +1,4 @@
-# Netgen Layouts user interface core framework
+# [OBSOLETE] Netgen Layouts user interface core framework
 
 This repository contains the core framework for Netgen Layouts user interface.
 
